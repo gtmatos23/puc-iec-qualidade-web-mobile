@@ -58,7 +58,17 @@ Abre a timeline de um teste: DOM em cada passo, network, console. Mesmo pra um t
 
 ## Passo 4 — Desafio: o bug de vocês (5min, ou pra terminar em casa)
 
-Abram o `describe` **"DESAFIO"** no fim do spec. Peguem 1 bug que **vocês mesmos** encontraram no charter da Aula 1 (não os 3 que já estão prontos) e escrevam o teste:
+Abram o `describe` **"DESAFIO"** no fim do spec. Peguem 1 bug que **vocês mesmos** encontraram no charter da Aula 1 (não os 3 que já estão prontos).
+
+Não sabe o locator de cabeça? Usem o `codegen` (visto no início da aula) pra descobrir sem adivinhar:
+
+```bash
+npx playwright codegen "http://web.archive.org/web/20260826200139if_/http://www.arngren.net/"
+```
+
+Cliquem no elemento com problema — o Inspector mostra o locator recomendado. Copiem só o locator, não o fluxo inteiro (o teste continua sendo uma asserção de bug, não uma gravação).
+
+Depois, escrevam o teste:
 
 ```typescript
 test('BUG-00X: <descrição do bug de vocês>', async ({ page }) => {
