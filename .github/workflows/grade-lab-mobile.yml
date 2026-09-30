@@ -26,6 +26,8 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: _pr
+          persist-credentials: false
+          allow-unsafe-pr-checkout: true
 
       - name: Setup Node
         uses: actions/setup-node@v4
