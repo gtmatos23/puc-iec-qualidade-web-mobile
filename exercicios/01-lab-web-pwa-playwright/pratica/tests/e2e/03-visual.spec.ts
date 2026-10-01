@@ -31,10 +31,12 @@ test.describe('Visual regression', () => {
   });
 
   // 🧑‍💻 2. 🔴 DESAFIO — home em 3 viewports (loop sobre VIEWPORTS)
+  // ⚠️ Use '/qa' (ambiente determinístico), NÃO '/' — "/" hoje é a tela
+  // Discover com dado real do TMDB, que muda e quebraria o baseline sozinho.
   for (const vp of VIEWPORTS) {
     test(`2. home estável em ${vp.name} (${vp.width}x${vp.height})`, async ({ page }) => {
       // TODO: ajuste o viewport: page.setViewportSize({ width: vp.width, height: vp.height })
-      // TODO: navegue pra '/' e espere movielist-grid ficar visível
+      // TODO: navegue pra '/qa' e espere movielist-grid ficar visível
       // TODO: snapshot nomeado por viewport: `home-${vp.name}.png`
       // Dica: fullPage: true captura a página inteira, não só a dobra.
     });

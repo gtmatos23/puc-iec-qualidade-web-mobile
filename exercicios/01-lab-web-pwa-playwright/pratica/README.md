@@ -3,8 +3,17 @@
 App de filmes **já implementado** (React + Vite + PWA). Você **não escreve UI** —
 escreve os **testes**: os specs em `tests/e2e/` têm TODOs marcando o que falta.
 
-É o mesmo produto do CineFav mobile (Lab Maestro): mesmas telas, mesmos
-`data-testid`, mesmo dataset mockado — roda **offline, sem token, determinístico**.
+**Duas áreas, propósitos diferentes:**
+
+- **`/`** — tela principal, busca filmes de verdade no TMDB (pôster + comentários reais).
+  Precisa de internet; dado muda (não é usada pelos specs avaliativos).
+- **`/qa`** — o app original, mesmo produto do CineFav mobile (Lab Maestro): mesmas
+  telas, mesmos `data-testid`, mesmo dataset mockado — **offline, sem token,
+  determinístico**. É aqui que os specs 01-05 (avaliativos) rodam.
+
+> Por quê a separação? Teste de verdade (visual regression, offline) precisa de dado
+> fixo — ver comentário em `src/services/api.ts`. `/qa` garante isso; `/` é só pra
+> mostrar a mesma UI com dado real.
 
 ## Setup
 
@@ -46,17 +55,17 @@ npm run test:e2e
 
 📘 = modelo resolvido · ✅ = avaliativo (todo `it()` conta) · 🎁 = bônus, não pontua
 
-## 🎁 Bônus — tela `/discover` com TMDB de verdade
+## 🎁 Bônus — tela principal (`/`) com TMDB de verdade
 
-O app principal (specs 01-05) é 100% mockado/offline de propósito — ver `src/services/api.ts`.
-A tela `/discover` é a exceção: busca de verdade em `api.themoviedb.org`. Pra usar manualmente
-(não precisa pra rodar os testes — `06-discover-tmdb.spec.ts` intercepta a chamada):
+A tela principal busca de verdade em `api.themoviedb.org` (pôster real + comentários
+reais via `/movie/:id/reviews`). Pra usar manualmente (não precisa pra rodar os
+testes — `06-discover-tmdb.spec.ts` intercepta a chamada):
 
 ```bash
 cp .env.example .env.local
 # edite .env.local com seu VITE_TMDB_TOKEN (veja instruções no arquivo)
 npm run dev
-# clica em "🌐 Descobrir (bônus)" na tela principal
+# a tela principal já abre com os filmes reais
 ```
 
 `06-discover-tmdb.spec.ts` roda sem token nenhum — `page.route('**/api.themoviedb.org/**', ...)`

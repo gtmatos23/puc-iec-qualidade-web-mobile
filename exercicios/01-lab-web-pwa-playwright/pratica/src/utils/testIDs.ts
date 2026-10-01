@@ -67,9 +67,16 @@ export const testIDs = {
     grid: 'discover-grid',
     card: (id: number) => `discover-card-${id}`,
     title: (id: number) => `discover-title-${id}`,
-    reviewsButton: (id: number) => `discover-reviews-button-${id}`,
-    reviewsList: (id: number) => `discover-reviews-list-${id}`,
-    reviewsEmpty: (id: number) => `discover-reviews-empty-${id}`,
+  },
+
+  discoverDetail: {
+    screen: 'discover-detail-screen',
+    back: 'discover-detail-back-button',
+    title: 'discover-detail-title',
+    notFound: 'discover-detail-not-found',
+    reviewsButton: 'discover-reviews-button',
+    reviewsList: 'discover-reviews-list',
+    reviewsEmpty: 'discover-reviews-empty',
     reviewItem: (reviewId: string) => `discover-review-${reviewId}`,
   },
 

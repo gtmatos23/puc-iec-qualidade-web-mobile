@@ -5,6 +5,7 @@ import { testIDs } from '@/utils/testIDs';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import OfflineBanner from '@/components/OfflineBanner';
 import Login from '@/screens/Login';
+import Discover from '@/screens/Discover';
 import MovieList from '@/screens/MovieList';
 
 // Rotas secundárias em chunks separados (lazy loading — assunto da aula de SPA).
@@ -12,7 +13,7 @@ import MovieList from '@/screens/MovieList';
 const Search = lazy(() => import('@/screens/Search'));
 const Favorites = lazy(() => import('@/screens/Favorites'));
 const MovieDetail = lazy(() => import('@/screens/MovieDetail'));
-const Discover = lazy(() => import('@/screens/Discover')); // 🎁 bônus — TMDB real
+const DiscoverDetail = lazy(() => import('@/screens/DiscoverDetail'));
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   if (!currentUser()) return <Navigate to="/login" replace />;
@@ -44,6 +45,25 @@ export default function App() {
             path="/"
             element={
               <RequireAuth>
+                <Discover />
+              </RequireAuth>
+            }
+          />
+          {/* /discover = alias de '/' (compat com o spec 06 e link antigo) */}
+          <Route
+            path="/discover"
+            element={
+              <RequireAuth>
+                <Discover />
+              </RequireAuth>
+            }
+          />
+          {/* /qa = o app estático/determinístico original (era '/') — usado
+              pelos specs 01-05 (dado fixo, funciona offline, sem token). */}
+          <Route
+            path="/qa"
+            element={
+              <RequireAuth>
                 <MovieList />
               </RequireAuth>
             }
@@ -73,10 +93,10 @@ export default function App() {
             }
           />
           <Route
-            path="/discover"
+            path="/discover/:id"
             element={
               <RequireAuth>
-                <Discover />
+                <DiscoverDetail />
               </RequireAuth>
             }
           />

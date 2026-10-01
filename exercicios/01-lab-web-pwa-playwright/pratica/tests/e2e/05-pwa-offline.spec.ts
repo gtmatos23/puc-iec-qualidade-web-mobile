@@ -15,9 +15,14 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('PWA', () => {
+  // ⚠️ Toda visita deste spec é pra '/qa', não '/'. "/" hoje é a tela
+  // Discover (dado real do TMDB) — testar offline ali não faz sentido,
+  // já que a tela depende de internet pra existir. '/qa' é o catálogo
+  // fixo/cacheável que o Service Worker consegue servir sem rede.
+
   // 🧑‍🏫 1. FÁCIL — Service Worker registrado e ativo
   test('1. Service Worker fica ativo após a primeira visita', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/qa');
     await expect(page.getByTestId('movielist-grid')).toBeVisible();
 
     // serviceWorker.ready resolve com o worker ainda em "activating" —
@@ -35,7 +40,7 @@ test.describe('PWA', () => {
 
   // 🧑‍💻 2. FÁCIL — manifest válido e linkado
   test('2. manifest da PWA está linkado e tem os campos mínimos', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/qa');
 
     const manifestHref = await page.locator('link[rel="manifest"]').getAttribute('href');
     expect(manifestHref).toBeTruthy();
@@ -54,7 +59,7 @@ test.describe('PWA', () => {
   // 🧑‍💻 3. 🔴 DESAFIO — o app funciona OFFLINE
   test('3. catálogo continua acessível offline', async ({ page, context }) => {
     // Passo 1: visita online.
-    // TODO: goto('/') e espere movielist-grid
+    // TODO: goto('/qa') e espere movielist-grid
 
     // Passo 2: espere o SW CONTROLAR a página. "activated" não basta —
     // quem responde navegação offline é o CONTROLLER desta página:

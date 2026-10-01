@@ -1,6 +1,8 @@
 // tests/e2e/06-discover-tmdb.spec.ts
 // ─────────────────────────────────────────────────────────────────────────────
-// 🎁 BÔNUS (não pontua) — network mocking num domínio EXTERNO de verdade.
+// Specs da tela principal ("/", dado real do TMDB) — network mocking num
+// domínio EXTERNO de verdade. Não entra na rubrica dos 20pts (isso roda
+// em /qa, specs 01-05) — é prática extra sobre a mesma técnica.
 //
 // Diferença do spec 02 (02-busca-mock.spec.ts): lá o fetch é same-origin
 // (/api/movies.json, o próprio servidor do Vite). Aqui o app chama
@@ -66,13 +68,29 @@ test.describe('Discover — TMDB real (mockado no teste)', () => {
     await expect(page.getByTestId('discover-title-1')).toHaveText('Rede Voltou');
   });
 
-  test('3. "Ver comentários" mocka endpoint de reviews (/movie/:id/reviews)', async ({ page }) => {
+  test('3. abre o detalhe e "Ver comentários" mocka /movie/:id/reviews', async ({ page }) => {
     await page.route('**/movie/popular*', (route) =>
       route.fulfill({
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({
           results: [{ id: 42, title: 'Filme com Reviews', overview: '', release_date: '2026-01-01', vote_average: 8 }],
+        }),
+      }),
+    );
+    // Detalhe (GET /movie/42) é uma rota DIFERENTE de /movie/popular — cuidado
+    // pra não casar as duas com o mesmo padrão genérico '**/movie/**'.
+    await page.route('**/movie/42?*', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          id: 42,
+          title: 'Filme com Reviews',
+          overview: 'Sinopse mockada.',
+          release_date: '2026-01-01',
+          vote_average: 8,
+          poster_path: null,
         }),
       }),
     );
@@ -94,8 +112,11 @@ test.describe('Discover — TMDB real (mockado no teste)', () => {
     );
 
     await page.goto('/discover');
-    await page.getByTestId('discover-reviews-button-42').click();
-    await expect(page.getByTestId('discover-reviews-list-42')).toBeVisible();
+    await page.getByTestId('discover-card-42').click();
+    await expect(page.getByTestId('discover-detail-title')).toHaveText('Filme com Reviews');
+
+    await page.getByTestId('discover-reviews-button').click();
+    await expect(page.getByTestId('discover-reviews-list')).toBeVisible();
     await expect(page.getByTestId('discover-review-rev1')).toContainText('Crítico Mockado');
   });
 });

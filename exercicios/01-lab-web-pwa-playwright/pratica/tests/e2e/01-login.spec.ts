@@ -21,7 +21,7 @@ test.describe('Login', () => {
     await expect(page).toHaveURL(/\/login/);
   });
 
-  test('2. login com credenciais válidas leva à lista de filmes', async ({ page }) => {
+  test('2. login com credenciais válidas leva à tela principal', async ({ page }) => {
     await page.goto('/login');
 
     // getByTestId: seletor estável, imune a mudança de texto/CSS.
@@ -31,8 +31,12 @@ test.describe('Login', () => {
 
     // Web-first assertion: espera + verifica num passo só (auto-waiting).
     // NUNCA page.waitForTimeout(3000) — é assim que nasce suíte flaky.
-    await expect(page.getByTestId('movielist-screen')).toBeVisible();
-    await expect(page.getByTestId('movie-card-603')).toBeVisible(); // Matrix
+    //
+    // Repara: NÃO asserta um filme específico — "/" hoje é a tela Discover
+    // (dado real do TMDB, muda sempre). Testar a TELA (estrutural) em vez
+    // do CONTEÚDO (variável) é o que mantém esse teste estável. Pra dado
+    // fixo e determinístico, veja o ambiente QA em '/qa' (specs 02-05).
+    await expect(page.getByTestId('discover-screen')).toBeVisible();
   });
 
   test('3. senha errada mostra mensagem de erro e NÃO navega', async ({ page }) => {

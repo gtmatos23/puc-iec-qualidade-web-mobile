@@ -19,8 +19,11 @@ setup('autentica e salva o storageState', async ({ page }) => {
   await page.getByTestId('login-password-input').fill('1234');
   await page.getByTestId('login-submit-button').click();
 
-  // Só salve o estado DEPOIS de provar que o login funcionou.
-  await expect(page.getByTestId('movielist-screen')).toBeVisible();
+  // Só salve o estado DEPOIS de provar que o login funcionou. Não assume
+  // qual tela é "/" (hoje é Discover, dado real) — espera o sinal
+  // route-agnostic que o App.tsx seta assim que monta (ver App.tsx).
+  await page.waitForURL((url) => !url.pathname.startsWith('/login'));
+  await expect(page.locator('html')).toHaveAttribute('data-app-ready', 'true');
 
   await page.context().storageState({ path: AUTH_FILE });
 });

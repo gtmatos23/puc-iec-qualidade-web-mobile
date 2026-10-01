@@ -15,6 +15,11 @@ completar os specs Playwright de `pratica/tests/e2e/` e configurar o Lighthouse 
 
 Regra de ouro da disciplina: **o app vem pronto; você escreve só os testes.**
 
+> ⚠️ **Os specs avaliativos rodam contra `/qa`, não `/`.** A tela principal (`/`) busca
+> filmes de verdade no TMDB — ótima pra ver a UI com dado real, mas inútil pra teste
+> determinístico (visual regression, offline). `/qa` é o catálogo fixo/mockado — é lá
+> que o critério eliminatório (3 runs consecutivos 100% verde) precisa passar.
+
 As Aulas 2 e 3 demonstram cada técnica ao vivo, e o screencast mostra o
 professor resolvendo o primeiro spec de cada tema.
 
@@ -74,9 +79,9 @@ npm run test:e2e     # a suíte roda — specs com TODO ainda passam "vazios"
 
 ## 🎁 Bônus (não pontua)
 
-- **Tela `/discover` com TMDB de verdade** (`06-discover-tmdb.spec.ts`): o app principal é
-  mockado/offline de propósito (specs 01-05). Essa tela bônus busca de verdade em
-  `api.themoviedb.org` — o spec mocka um **domínio externo real** com `page.route()`,
-  diferente do mock same-origin do spec 02. Não precisa de token pra rodar o teste
-  (o route() intercepta antes da chamada sair pra rede); só pra usar a tela manualmente.
-  Detalhes em `pratica/README.md`.
+- **Tela principal (`/`) com TMDB de verdade** (`06-discover-tmdb.spec.ts`): pôster real,
+  dado real, e um botão "Ver comentários" por filme que busca `/movie/:id/reviews` de
+  verdade. O spec mocka **2 domínios externos reais** com `page.route()` (popular +
+  reviews), diferente do mock same-origin do spec 02. Não precisa de token pra rodar o
+  teste (o route() intercepta antes da chamada sair pra rede); só pra usar a tela
+  manualmente. Detalhes em `pratica/README.md`.

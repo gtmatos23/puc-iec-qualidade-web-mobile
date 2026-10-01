@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Comportamento SPA', () => {
   // 🧑‍🏫 1. FÁCIL — esperar o app ficar interativo (sem sleep!)
   test('1. app sinaliza que está pronto via data-app-ready', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/qa');
 
     // O app seta data-app-ready="true" no <html> quando o React montou.
     // Esperar por um SINAL do app >>> esperar 3 segundos e torcer.
@@ -23,7 +23,8 @@ test.describe('Comportamento SPA', () => {
 
   // 🧑‍💻 2. FÁCIL — navegação client-side não recarrega a página
   test('2. ir pra busca e voltar mantém o estado do JS', async ({ page }) => {
-    await page.goto('/');
+    // '/qa' = ambiente determinístico (ver nota do teste 1 do spec 03).
+    await page.goto('/qa');
     await expect(page.getByTestId('movielist-grid')).toBeVisible();
 
     // Marca uma variável no window. Se a navegação fizer full reload,
@@ -46,7 +47,7 @@ test.describe('Comportamento SPA', () => {
     // depois da navegação (o import() dinâmico do React.lazy).
     // TODO: const chunks: string[] = []
     // TODO: page.on('request', ...) filtrando url que termina com .js
-    // TODO: goto('/'), zere a lista, clique em movielist-favorites-button
+    // TODO: goto('/qa'), zere a lista, clique em movielist-favorites-button
     // TODO: espere favorites-screen e expect(chunks.length).toBeGreaterThan(0)
   });
 

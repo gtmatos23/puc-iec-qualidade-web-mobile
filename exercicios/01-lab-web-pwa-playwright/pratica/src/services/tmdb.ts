@@ -1,10 +1,13 @@
 // src/services/tmdb.ts
 //
-// 🎁 BÔNUS — ao contrário de services/api.ts (catálogo mockado local), este
-// serviço bate numa API EXTERNA de verdade: api.themoviedb.org. Existe pra
-// praticar network mocking "real" — interceptar um domínio de terceiro com
-// page.route(), não um fetch same-origin. Precisa de VITE_TMDB_TOKEN (veja
-// .env.example). Não faz parte da rubrica dos 20pts.
+// Ao contrário de services/api.ts (catálogo mockado local, usado em /qa),
+// este serviço bate numa API EXTERNA de verdade: api.themoviedb.org — é o
+// que alimenta a tela principal ("/"). Também serve pra praticar network
+// mocking "real": interceptar um domínio de terceiro com page.route(), não
+// um fetch same-origin. Precisa de VITE_TMDB_TOKEN (veja .env.example) pra
+// uso manual; os specs (06-discover-tmdb.spec.ts) nunca dependem do token,
+// pois mockam a chamada antes dela sair pra rede. Não faz parte da rubrica
+// dos 20pts (que roda em /qa).
 
 import type { Movie } from '@/types/movie';
 
@@ -79,4 +82,9 @@ export async function getMovieReviews(id: number): Promise<TMDBReview[]> {
   const res = await tmdbFetch(`/movie/${id}/reviews`);
   const data: TMDBReviewsResponse = await res.json();
   return data.results;
+}
+
+export async function getMovieDetail(id: number): Promise<TMDBMovie> {
+  const res = await tmdbFetch(`/movie/${id}`);
+  return res.json();
 }

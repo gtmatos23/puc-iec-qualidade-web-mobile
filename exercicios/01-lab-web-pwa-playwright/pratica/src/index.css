@@ -87,6 +87,20 @@ a {
   color: #ffb703;
 }
 
+.app-header h1 small {
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.qa-note {
+  margin: 0;
+  padding: 8px 20px;
+  font-size: 13px;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.03);
+}
+
 .icon-button {
   background: var(--brand);
   color: #fff;

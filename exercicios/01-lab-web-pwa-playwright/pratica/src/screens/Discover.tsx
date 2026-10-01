@@ -1,11 +1,12 @@
 // src/screens/Discover.tsx
 //
-// 🎁 BÔNUS — mesma estrutura de MovieList.tsx, mas busca da API real do TMDB
-// (src/services/tmdb.ts) em vez do catálogo mockado local. O resto do app
-// (tela principal, favoritos, busca) continua 100% offline/determinístico.
+// Tela PRINCIPAL do app (rota "/") — busca da API real do TMDB
+// (src/services/tmdb.ts), com pôster e comentários reais. O catálogo
+// mockado/offline original foi pra "/qa" (MovieList.tsx) — é lá que os
+// specs 01-05 (avaliativos, deterministicos) continuam rodando.
 
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getDiscoverMovies, type TMDBMovie } from '@/services/tmdb';
 import { testIDs } from '@/utils/testIDs';
 import DiscoverCard from '@/components/DiscoverCard';
@@ -13,6 +14,7 @@ import DiscoverCard from '@/components/DiscoverCard';
 type Status = 'loading' | 'ready' | 'error';
 
 export default function Discover() {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState<TMDBMovie[]>([]);
   const [status, setStatus] = useState<Status>('loading');
   const [errorMessage, setErrorMessage] = useState('');
@@ -37,10 +39,12 @@ export default function Discover() {
   return (
     <main data-testid={testIDs.discover.screen}>
       <header className="app-header">
-        <h1>🌐 Descobrir (TMDB)</h1>
-        <Link to="/" className="icon-button">
-          ← Voltar
-        </Link>
+        <h1>
+          <span className="logo-mark">★</span> CineFav
+        </h1>
+        <button className="icon-button" onClick={() => navigate('/qa')}>
+          🧪 Ambiente QA (busca, favoritos, testes)
+        </button>
       </header>
 
       <div className="screen-body">

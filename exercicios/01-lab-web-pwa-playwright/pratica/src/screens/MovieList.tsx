@@ -30,7 +30,7 @@ export default function MovieList() {
     <main data-testid={testIDs.movieList.screen}>
       <header className="app-header">
         <h1>
-          <span className="logo-mark">★</span> CineFav
+          <span className="logo-mark">★</span> CineFav <small>— Ambiente QA</small>
         </h1>
         <button
           className="icon-button"
@@ -46,10 +46,14 @@ export default function MovieList() {
         >
           ❤️ Favoritos
         </button>
-        <button className="icon-button" onClick={() => navigate('/discover')}>
-          🌐 Descobrir (bônus)
+        <button className="icon-button" onClick={() => navigate('/')}>
+          ← Tela principal
         </button>
       </header>
+
+      <p className="qa-note">
+        Ambiente de QA: catálogo fixo, 100% offline, sem token — é aqui que os specs 01-05 rodam.
+      </p>
 
       <div className="screen-body">
         {status === 'loading' && (
