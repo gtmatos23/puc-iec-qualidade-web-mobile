@@ -28,6 +28,7 @@ export const testIDs = {
     list: 'movielist-grid',
     error: 'movielist-error',
     retry: 'movielist-retry-button',
+    loadMore: 'movielist-load-more-button',
   },
 
   movieCard: {
@@ -67,6 +68,7 @@ export const testIDs = {
     grid: 'discover-grid',
     card: (id: number) => `discover-card-${id}`,
     title: (id: number) => `discover-title-${id}`,
+    loadMore: 'discover-load-more-button',
   },
 
   discoverDetail: {

@@ -23,6 +23,13 @@ export interface TMDBMovie extends Movie {
 
 interface TMDBMoviesResponse {
   results: TMDBMovie[];
+  page?: number;
+  total_pages?: number;
+}
+
+export interface DiscoverPage {
+  movies: TMDBMovie[];
+  hasMore: boolean;
 }
 
 export interface TMDBReview {
@@ -49,13 +56,13 @@ export function posterUrl(path: string | null): string | null {
 // header Authorization; "API Key" (v3, 32 chars hex) vai como query param
 // ?api_key=. Detecta automaticamente pra aceitar qualquer um que o aluno
 // copiar.
-async function tmdbFetch(path: string): Promise<Response> {
+async function tmdbFetch(path: string, page = 1): Promise<Response> {
   const token = import.meta.env.VITE_TMDB_TOKEN as string | undefined;
   const isV4 = !!token && token.startsWith('eyJ');
 
   const url = new URL(`${TMDB_BASE}${path}`);
   url.searchParams.set('language', 'pt-BR');
-  url.searchParams.set('page', '1');
+  url.searchParams.set('page', String(page));
   if (token && !isV4) url.searchParams.set('api_key', token);
 
   const res = await fetch(url.toString(), {
@@ -72,10 +79,11 @@ async function tmdbFetch(path: string): Promise<Response> {
   return res;
 }
 
-export async function getDiscoverMovies(): Promise<TMDBMovie[]> {
-  const res = await tmdbFetch('/movie/popular');
+export async function getDiscoverMovies(page = 1): Promise<DiscoverPage> {
+  const res = await tmdbFetch('/movie/popular', page);
   const data: TMDBMoviesResponse = await res.json();
-  return data.results;
+  const totalPages = data.total_pages ?? 1;
+  return { movies: data.results, hasMore: page < totalPages };
 }
 
 export async function getMovieReviews(id: number): Promise<TMDBReview[]> {

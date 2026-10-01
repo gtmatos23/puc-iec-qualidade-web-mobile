@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Movie } from '@/types/movie';
-import { getPopularMovies } from '@/services/api';
+import { getAllMovies } from '@/services/api';
 import { toggleFavorite, useFavorites } from '@/store/favorites';
 import { testIDs } from '@/utils/testIDs';
 import Poster from '@/components/Poster';
@@ -12,7 +12,7 @@ export default function Favorites() {
   const [catalog, setCatalog] = useState<Movie[]>([]);
 
   useEffect(() => {
-    getPopularMovies().then(setCatalog).catch(() => setCatalog([]));
+    getAllMovies().then(setCatalog).catch(() => setCatalog([]));
   }, []);
 
   const favorites = catalog.filter((m) => favoriteIds.includes(m.id));

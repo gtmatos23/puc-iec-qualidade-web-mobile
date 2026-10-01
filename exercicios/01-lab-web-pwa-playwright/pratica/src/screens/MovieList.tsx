@@ -11,16 +11,35 @@ export default function MovieList() {
   const navigate = useNavigate();
   const [movies, setMovies] = useState<Movie[]>([]);
   const [status, setStatus] = useState<Status>('loading');
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
+  // Carrega a página 1 (reset). Usado no mount e no "Tentar de novo".
   const load = useCallback(() => {
     setStatus('loading');
-    getPopularMovies()
-      .then((data) => {
+    setPage(1);
+    getPopularMovies(1)
+      .then(({ movies: data, hasMore: more }) => {
         setMovies(data);
+        setHasMore(more);
         setStatus('ready');
       })
       .catch(() => setStatus('error'));
   }, []);
+
+  // "Carregar mais" — soma a próxima página na lista já carregada.
+  const loadMore = useCallback(() => {
+    const next = page + 1;
+    setLoadingMore(true);
+    getPopularMovies(next)
+      .then(({ movies: data, hasMore: more }) => {
+        setMovies((prev) => [...prev, ...data]);
+        setHasMore(more);
+        setPage(next);
+      })
+      .finally(() => setLoadingMore(false));
+  }, [page]);
 
   useEffect(() => {
     load();
@@ -72,11 +91,23 @@ export default function MovieList() {
         )}
 
         {status === 'ready' && (
-          <div className="movie-grid" data-testid={testIDs.movieList.list}>
-            {movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
+          <>
+            <div className="movie-grid" data-testid={testIDs.movieList.list}>
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+            {hasMore && (
+              <button
+                className="load-more-button"
+                data-testid={testIDs.movieList.loadMore}
+                onClick={loadMore}
+                disabled={loadingMore}
+              >
+                {loadingMore ? 'Carregando…' : 'Carregar mais'}
+              </button>
+            )}
+          </>
         )}
       </div>
     </main>

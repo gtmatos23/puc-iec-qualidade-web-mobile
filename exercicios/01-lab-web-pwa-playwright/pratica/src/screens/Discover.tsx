@@ -18,12 +18,17 @@ export default function Discover() {
   const [movies, setMovies] = useState<TMDBMovie[]>([]);
   const [status, setStatus] = useState<Status>('loading');
   const [errorMessage, setErrorMessage] = useState('');
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const load = useCallback(() => {
     setStatus('loading');
-    getDiscoverMovies()
-      .then((data) => {
+    setPage(1);
+    getDiscoverMovies(1)
+      .then(({ movies: data, hasMore: more }) => {
         setMovies(data);
+        setHasMore(more);
         setStatus('ready');
       })
       .catch((err: Error) => {
@@ -31,6 +36,18 @@ export default function Discover() {
         setStatus('error');
       });
   }, []);
+
+  const loadMore = useCallback(() => {
+    const next = page + 1;
+    setLoadingMore(true);
+    getDiscoverMovies(next)
+      .then(({ movies: data, hasMore: more }) => {
+        setMovies((prev) => [...prev, ...data]);
+        setHasMore(more);
+        setPage(next);
+      })
+      .finally(() => setLoadingMore(false));
+  }, [page]);
 
   useEffect(() => {
     load();
@@ -64,11 +81,23 @@ export default function Discover() {
         )}
 
         {status === 'ready' && (
-          <div className="movie-grid" data-testid={testIDs.discover.grid}>
-            {movies.map((movie) => (
-              <DiscoverCard key={movie.id} movie={movie} />
-            ))}
-          </div>
+          <>
+            <div className="movie-grid" data-testid={testIDs.discover.grid}>
+              {movies.map((movie) => (
+                <DiscoverCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+            {hasMore && (
+              <button
+                className="load-more-button"
+                data-testid={testIDs.discover.loadMore}
+                onClick={loadMore}
+                disabled={loadingMore}
+              >
+                {loadingMore ? 'Carregando…' : 'Carregar mais'}
+              </button>
+            )}
+          </>
         )}
       </div>
     </main>
