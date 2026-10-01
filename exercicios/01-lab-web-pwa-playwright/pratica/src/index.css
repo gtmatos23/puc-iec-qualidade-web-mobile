@@ -207,6 +207,13 @@ a {
   color: rgba(255, 255, 255, 0.85);
 }
 
+/* pôster real (tela /discover, bônus) — mesma proporção do placeholder */
+img.poster {
+  width: 100%;
+  object-fit: cover;
+  background: var(--surface);
+}
+
 .poster.small {
   aspect-ratio: auto;
   width: 48px;

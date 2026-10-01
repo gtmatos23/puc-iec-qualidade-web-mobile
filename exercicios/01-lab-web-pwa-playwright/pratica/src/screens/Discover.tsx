@@ -6,15 +6,14 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { Movie } from '@/types/movie';
-import { getDiscoverMovies } from '@/services/tmdb';
+import { getDiscoverMovies, posterUrl, type TMDBMovie } from '@/services/tmdb';
 import { testIDs } from '@/utils/testIDs';
 import Poster from '@/components/Poster';
 
 type Status = 'loading' | 'ready' | 'error';
 
 export default function Discover() {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<TMDBMovie[]>([]);
   const [status, setStatus] = useState<Status>('loading');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -68,7 +67,16 @@ export default function Discover() {
                 className="movie-card"
                 data-testid={testIDs.discover.card(movie.id)}
               >
-                <Poster title={movie.title} />
+                {posterUrl(movie.poster_path) ? (
+                  <img
+                    className="poster"
+                    src={posterUrl(movie.poster_path)!}
+                    alt={`Pôster de ${movie.title}`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <Poster title={movie.title} />
+                )}
                 <div className="movie-card-body">
                   <h3
                     className="movie-card-title"

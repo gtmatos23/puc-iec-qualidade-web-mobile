@@ -9,12 +9,24 @@
 import type { Movie } from '@/types/movie';
 
 const TMDB_BASE = 'https://api.themoviedb.org/3';
+const POSTER_BASE = 'https://image.tmdb.org/t/p/w342';
 
-interface TMDBResponse {
-  results: Movie[];
+// Tipo próprio (não o Movie mockado) — TMDB real traz poster_path, que
+// vira a URL do pôster de verdade (/discover é a única tela com imagem
+// real; o resto do app usa Poster.tsx por design — ver comentário lá).
+export interface TMDBMovie extends Movie {
+  poster_path: string | null;
 }
 
-export async function getDiscoverMovies(): Promise<Movie[]> {
+interface TMDBResponse {
+  results: TMDBMovie[];
+}
+
+export function posterUrl(path: string | null): string | null {
+  return path ? `${POSTER_BASE}${path}` : null;
+}
+
+export async function getDiscoverMovies(): Promise<TMDBMovie[]> {
   // Sem VITE_TMDB_TOKEN: a chamada sai do mesmo jeito (sem auth) — em uso
   // manual real, o TMDB responde 401 e cai no !res.ok abaixo. Em teste, o
   // page.route() intercepta ANTES disso (não depende do token).
