@@ -15,13 +15,25 @@ interface TMDBResponse {
 }
 
 export async function getDiscoverMovies(): Promise<Movie[]> {
-  // Sem VITE_TMDB_TOKEN: a chamada sai do mesmo jeito (sem Authorization) —
-  // em uso manual real, o TMDB responde 401 e cai no !res.ok abaixo. Em
-  // teste, o page.route() intercepta ANTES disso (não depende do token).
+  // Sem VITE_TMDB_TOKEN: a chamada sai do mesmo jeito (sem auth) — em uso
+  // manual real, o TMDB responde 401 e cai no !res.ok abaixo. Em teste, o
+  // page.route() intercepta ANTES disso (não depende do token).
+  //
+  // TMDB tem 2 formatos de credencial (a página de Settings → API mostra os
+  // dois): "API Read Access Token" (v4, JWT longo, começa com eyJ) vai no
+  // header Authorization; "API Key" (v3, 32 chars hex) vai como query param
+  // ?api_key=. Detecta automaticamente pra aceitar qualquer um que o aluno
+  // copiar.
   const token = import.meta.env.VITE_TMDB_TOKEN as string | undefined;
+  const isV4 = !!token && token.startsWith('eyJ');
 
-  const res = await fetch(`${TMDB_BASE}/movie/popular?language=pt-BR&page=1`, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  const url = new URL(`${TMDB_BASE}/movie/popular`);
+  url.searchParams.set('language', 'pt-BR');
+  url.searchParams.set('page', '1');
+  if (token && !isV4) url.searchParams.set('api_key', token);
+
+  const res = await fetch(url.toString(), {
+    headers: isV4 ? { Authorization: `Bearer ${token}` } : {},
   });
 
   if (!res.ok) {
