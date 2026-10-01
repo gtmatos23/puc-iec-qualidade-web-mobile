@@ -61,6 +61,12 @@ export default function DiscoverDetail() {
       </header>
 
       <div className="screen-body">
+        {!movie && !notFound && (
+          <div className="state-block" data-testid={testIDs.discoverDetail.loading}>
+            Carregando…
+          </div>
+        )}
+
         {notFound && (
           <div className="state-block" data-testid={testIDs.discoverDetail.notFound}>
             Filme não encontrado.

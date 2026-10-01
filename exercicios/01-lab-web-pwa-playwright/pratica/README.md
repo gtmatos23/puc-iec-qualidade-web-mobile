@@ -52,6 +52,7 @@ npm run test:e2e
 | `04-spa.spec.ts` | ✅ app-ready, navegação client-side, lazy chunk | Testando SPAs |
 | `05-pwa-offline.spec.ts` | ✅ SW ativo, manifest, `setOffline` | Testando PWAs |
 | `06-discover-tmdb.spec.ts` | 🎁 mock de domínio externo real (TMDB) | Bônus — não pontua |
+| `e2e-bonus/07-discover-loader.spec.ts` | 🔴 desafio: loader + rede real throttled (`npm run test:bonus`) | Bônus — não pontua |
 
 📘 = modelo resolvido · ✅ = avaliativo (todo `it()` conta) · 🎁 = bônus, não pontua
 
@@ -72,6 +73,21 @@ npm run dev
 intercepta a chamada antes dela sair pra rede de verdade. Diferença do spec 02: lá o mock é
 same-origin (`/api/movies.json`, o próprio servidor); aqui é um domínio externo de verdade —
 mais parecido com o que você vai mockar num app em produção.
+
+## 🔴 Desafio difícil — loader + rede real throttled
+
+Em `tests/e2e-bonus/` (pasta própria, config própria — veja `playwright.bonus.config.ts`).
+Diferente do spec 06, este **não mocka o conteúdo** — intercepta a request real do TMDB,
+espera um pouco (`setTimeout`) e só depois deixa ela seguir (`route.continue()`). Prova que
+o loading state do `DiscoverDetail` aparece e depois some de verdade.
+
+```bash
+cp .env.example .env.local   # precisa de VITE_TMDB_TOKEN válido — sem token, TMDB responde 401
+npm run test:bonus
+```
+
+Roda **separado** da suíte avaliativa — nunca entra no `npm run test:e2e` nem no CI que
+corrige a Atividade (bate em rede real, não pode travar o critério eliminatório de ninguém).
 
 ## Visual regression
 

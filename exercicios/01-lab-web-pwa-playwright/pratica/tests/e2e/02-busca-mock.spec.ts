@@ -14,7 +14,8 @@
 //   1-2  só navegar + 1 assert (sem mock)
 //   3    busca real (sem mock ainda, mas já por testID específico)
 //   4    1º mock (fulfill já escrito, só falta o assert)
-//   5-7  desafio: mock inteiro do zero
+//   5    busca vazia (ainda sem mock — só muda o caso de teste)
+//   6-7  desafio: mock inteiro do zero
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { test, expect } from '@playwright/test';
@@ -80,29 +81,30 @@ test.describe('Busca + network mocking', () => {
     // TODO: verifique que o título "O Filme Que Só Existe No Mock" aparece
   });
 
-  // 🧑‍💻 5. 🔴 DESAFIO — matriz de erros HTTP: o catálogo falha de formas diferentes
-  // Mesmo padrão do teste 4 (route.fulfill) — só troca o status. Testar vários
-  // códigos garante que o app mostra erro genérico pra QUALQUER falha, não só
-  // pra uma (raciocínio de QA: classes de equivalência de erro, não só 1 caso).
+  // 🧑‍💻 5. FÁCIL — busca vazia (ainda sem mock)
+  test('5. busca sem resultado mostra estado vazio', async ({ page }) => {
+    // TODO: sem mock nenhum, busque um título que não existe (ex.: "xyzw")
+    // TODO: espere o testID search-empty ficar visível
+  });
+
+  // 🧑‍💻 6. 🔴 DESAFIO — matriz de erros HTTP: o catálogo falha de formas diferentes
+  // Mesmo padrão do teste 4 (route.fulfill) — só troca o status. Raciocínio de
+  // QA (equivalência de classes, ISTQB): 404 representa falha 4xx (erro do
+  // cliente), 500 e 503 representam falha 5xx (erro do servidor — 503 é a
+  // mais comum em indisponibilidade real). 1 caso por classe, não repetição.
   for (const status of [404, 500, 503]) {
-    test(`5. catálogo responde ${status} mostra estado de erro`, async ({ page }) => {
+    test(`6. catálogo responde ${status} mostra estado de erro`, async ({ page }) => {
       // TODO: route.fulfill com este status (contentType json, body '{}')
       // TODO: navegue pra '/qa'
       // TODO: espere o testID movielist-error ficar visível
     });
   }
 
-  // 🧑‍💻 6. 🔴 DESAFIO — recuperação: rede cai, depois volta, retry funciona
-  test('6. rede fora do ar, depois volta — retry recarrega o catálogo', async ({ page }) => {
+  // 🧑‍💻 7. 🔴 DESAFIO — recuperação: rede cai, depois volta, retry funciona
+  test('7. rede fora do ar, depois volta — retry recarrega o catálogo', async ({ page }) => {
     // TODO: intercepte '**/api/movies.json' com route.abort() (rede totalmente fora)
     // TODO: navegue pra '/qa' e espere movielist-error
     // TODO: "conserte a rede": page.unroute('**/api/movies.json')
     // TODO: clique em movielist-retry-button e espere movielist-grid aparecer
-  });
-
-  // 🧑‍💻 7. 🔴 DESAFIO — busca vazia
-  test('7. busca sem resultado mostra estado vazio', async ({ page }) => {
-    // TODO: sem mock nenhum, busque um título que não existe (ex.: "xyzw")
-    // TODO: espere o testID search-empty ficar visível
   });
 });

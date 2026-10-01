@@ -63,6 +63,10 @@ npm run test:e2e     # a suíte roda — specs com TODO ainda passam "vazios"
 **Critério eliminatório:** a suíte deve passar 100% em 3 runs consecutivos
 (flakiness é bug do teste, não azar).
 
+> **Nota sobre o critério 1:** o score automático dele combina `auth.setup.ts` (dá hoje,
+> na Aula 2) **com** o spec 04 (SPA, Aula 3) — por isso o bot vai comentar um score
+> parcial nesse critério até vocês fazerem a Aula 3. Normal, não é erro seu.
+
 ## Como entregar
 
 1. Faça **fork** do repositório da disciplina.
@@ -92,5 +96,9 @@ npm run test:e2e     # a suíte roda — specs com TODO ainda passam "vazios"
   não mocka o conteúdo, só atrasa a resposta antes de deixar ela seguir pra rede de
   verdade (`route.continue()` depois de um `setTimeout`). Verifique: o loader aparece
   assim que navega, continua visível durante o atraso, e some quando o conteúdo real
-  chega. Organize com **Page Object**. CI precisa ficar verde no fork (mesmo workflow
-  dos specs 01-06). *(Scaffold com TODOs sai em breve — ver `pratica/README.md`.)*
+  chega. Organize com **Page Object** (scaffold em `pratica/tests/e2e-bonus/`).
+
+  Roda **separado** da suíte avaliativa: `npm run test:bonus` (nunca `test:e2e`) — bate
+  em rede real do TMDB, por isso não participa do critério eliminatório nem do CI que
+  corrige a Atividade. Precisa de `VITE_TMDB_TOKEN` válido no seu `.env.local` pra
+  passar (sem token, TMDB responde 401 — normal, não é bug seu).

@@ -74,6 +74,7 @@ export const testIDs = {
   discoverDetail: {
     screen: 'discover-detail-screen',
     back: 'discover-detail-back-button',
+    loading: 'discover-detail-loading',
     title: 'discover-detail-title',
     notFound: 'discover-detail-not-found',
     reviewsButton: 'discover-reviews-button',

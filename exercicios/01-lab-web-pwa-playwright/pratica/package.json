@@ -11,6 +11,7 @@
     "test:e2e:ui": "playwright test --ui",
     "test:visual": "playwright test 03-visual",
     "test:visual:update": "playwright test 03-visual --update-snapshots",
+    "test:bonus": "playwright test --config=playwright.bonus.config.ts",
     "lighthouse": "lhci autorun"
   },
   "dependencies": {
