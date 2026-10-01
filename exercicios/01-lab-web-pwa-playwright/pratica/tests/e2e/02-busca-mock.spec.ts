@@ -59,7 +59,7 @@ test.describe('Busca + network mocking', () => {
   // 🧑‍💻 3. 🔴 DESAFIO — erro de rede: catálogo indisponível
   test('3. falha na API mostra estado de erro com retry', async ({ page }) => {
     // TODO: intercepte '**/api/movies.json' com route.abort()
-    // TODO: navegue pra '/' (a home carrega o catálogo)
+    // TODO: navegue pra '/qa' (o catálogo mockado — "/" hoje é o Discover, TMDB real)
     // TODO: espere o estado de erro: testID movielist-error
     // TODO: agora "conserte a rede": page.unroute('**/api/movies.json')
     // TODO: clique em movielist-retry-button e espere movielist-grid aparecer
