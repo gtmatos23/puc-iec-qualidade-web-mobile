@@ -86,10 +86,11 @@ npm run test:e2e     # a suíte roda — specs com TODO ainda passam "vazios"
   teste (o route() intercepta antes da chamada sair pra rede); só pra usar a tela
   manualmente. Detalhes em `pratica/README.md`.
 
-- **🔴 Desafio difícil — cenário próprio com Page Object** *(pra casa, depois dos specs 02-03)*:
-  desenhe e implemente, **sem scaffold comentado**, 1 cenário de teste pro Discover (`/`)
-  cobrindo **paginação + abrir detalhe de um filme de página 2+ + "Ver comentários"** —
-  organizado com **Page Object** (ex.: `DiscoverPage`, não funções soltas no spec). CI
-  precisa ficar verde no fork (mesmo workflow dos specs 01-06). Use `06-discover-tmdb.spec.ts`
-  como referência do padrão de mock, não como template pra copiar — o cenário e a
-  Page Object são seus.
+- **🔴 Desafio difícil — loader + rede real throttled** *(pra casa, depois dos specs 02-03)*:
+  a tela de detalhe do Discover (`/`) tem um loading state enquanto busca o filme de
+  verdade no TMDB. Teste esse loader com **rede real desacelerada artificialmente** —
+  não mocka o conteúdo, só atrasa a resposta antes de deixar ela seguir pra rede de
+  verdade (`route.continue()` depois de um `setTimeout`). Verifique: o loader aparece
+  assim que navega, continua visível durante o atraso, e some quando o conteúdo real
+  chega. Organize com **Page Object**. CI precisa ficar verde no fork (mesmo workflow
+  dos specs 01-06). *(Scaffold com TODOs sai em breve — ver `pratica/README.md`.)*
