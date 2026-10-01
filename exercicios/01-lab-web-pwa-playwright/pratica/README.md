@@ -42,8 +42,27 @@ npm run test:e2e
 | `03-visual.spec.ts` | ✅ visual regression, 3 viewports | Visual Regression + CI |
 | `04-spa.spec.ts` | ✅ app-ready, navegação client-side, lazy chunk | Testando SPAs |
 | `05-pwa-offline.spec.ts` | ✅ SW ativo, manifest, `setOffline` | Testando PWAs |
+| `06-discover-tmdb.spec.ts` | 🎁 mock de domínio externo real (TMDB) | Bônus — não pontua |
 
-📘 = modelo resolvido · ✅ = avaliativo (todo `it()` conta)
+📘 = modelo resolvido · ✅ = avaliativo (todo `it()` conta) · 🎁 = bônus, não pontua
+
+## 🎁 Bônus — tela `/discover` com TMDB de verdade
+
+O app principal (specs 01-05) é 100% mockado/offline de propósito — ver `src/services/api.ts`.
+A tela `/discover` é a exceção: busca de verdade em `api.themoviedb.org`. Pra usar manualmente
+(não precisa pra rodar os testes — `06-discover-tmdb.spec.ts` intercepta a chamada):
+
+```bash
+cp .env.example .env.local
+# edite .env.local com seu VITE_TMDB_TOKEN (veja instruções no arquivo)
+npm run dev
+# clica em "🌐 Descobrir (bônus)" na tela principal
+```
+
+`06-discover-tmdb.spec.ts` roda sem token nenhum — `page.route('**/api.themoviedb.org/**', ...)`
+intercepta a chamada antes dela sair pra rede de verdade. Diferença do spec 02: lá o mock é
+same-origin (`/api/movies.json`, o próprio servidor); aqui é um domínio externo de verdade —
+mais parecido com o que você vai mockar num app em produção.
 
 ## Visual regression
 

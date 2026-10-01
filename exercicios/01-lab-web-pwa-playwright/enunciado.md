@@ -71,3 +71,12 @@ npm run test:e2e     # a suíte roda — specs com TODO ainda passam "vazios"
 - Faça na ordem: 02 → 03 → 04 → 05 (cada spec usa técnicas do anterior).
 - `npm run test:e2e:ui` abre o modo UI do Playwright — o melhor debugger da ferramenta.
 - Travou num seletor? Todos os `data-testid` estão centralizados em `src/utils/testIDs.ts`.
+
+## 🎁 Bônus (não pontua)
+
+- **Tela `/discover` com TMDB de verdade** (`06-discover-tmdb.spec.ts`): o app principal é
+  mockado/offline de propósito (specs 01-05). Essa tela bônus busca de verdade em
+  `api.themoviedb.org` — o spec mocka um **domínio externo real** com `page.route()`,
+  diferente do mock same-origin do spec 02. Não precisa de token pra rodar o teste
+  (o route() intercepta antes da chamada sair pra rede); só pra usar a tela manualmente.
+  Detalhes em `pratica/README.md`.

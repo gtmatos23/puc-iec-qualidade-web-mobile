@@ -59,6 +59,16 @@ export const testIDs = {
     empty: 'favorites-empty',
   },
 
+  discover: {
+    screen: 'discover-screen',
+    loading: 'discover-loading',
+    error: 'discover-error',
+    retry: 'discover-retry-button',
+    grid: 'discover-grid',
+    card: (id: number) => `discover-card-${id}`,
+    title: (id: number) => `discover-title-${id}`,
+  },
+
   shell: {
     offlineBanner: 'offline-banner',
     routeLoading: 'route-loading',

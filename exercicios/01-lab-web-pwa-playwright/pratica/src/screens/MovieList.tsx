@@ -46,6 +46,9 @@ export default function MovieList() {
         >
           ❤️ Favoritos
         </button>
+        <button className="icon-button" onClick={() => navigate('/discover')}>
+          🌐 Descobrir (bônus)
+        </button>
       </header>
 
       <div className="screen-body">
