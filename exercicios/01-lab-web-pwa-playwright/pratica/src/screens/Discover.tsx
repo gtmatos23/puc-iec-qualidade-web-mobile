@@ -6,9 +6,9 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getDiscoverMovies, posterUrl, type TMDBMovie } from '@/services/tmdb';
+import { getDiscoverMovies, type TMDBMovie } from '@/services/tmdb';
 import { testIDs } from '@/utils/testIDs';
-import Poster from '@/components/Poster';
+import DiscoverCard from '@/components/DiscoverCard';
 
 type Status = 'loading' | 'ready' | 'error';
 
@@ -62,31 +62,7 @@ export default function Discover() {
         {status === 'ready' && (
           <div className="movie-grid" data-testid={testIDs.discover.grid}>
             {movies.map((movie) => (
-              <article
-                key={movie.id}
-                className="movie-card"
-                data-testid={testIDs.discover.card(movie.id)}
-              >
-                {posterUrl(movie.poster_path) ? (
-                  <img
-                    className="poster"
-                    src={posterUrl(movie.poster_path)!}
-                    alt={`Pôster de ${movie.title}`}
-                    loading="lazy"
-                  />
-                ) : (
-                  <Poster title={movie.title} />
-                )}
-                <div className="movie-card-body">
-                  <h3
-                    className="movie-card-title"
-                    data-testid={testIDs.discover.title(movie.id)}
-                  >
-                    {movie.title}
-                  </h3>
-                  <span>⭐ {movie.vote_average.toFixed(1)}</span>
-                </div>
-              </article>
+              <DiscoverCard key={movie.id} movie={movie} />
             ))}
           </div>
         )}

@@ -65,4 +65,37 @@ test.describe('Discover — TMDB real (mockado no teste)', () => {
     await page.getByTestId('discover-retry-button').click();
     await expect(page.getByTestId('discover-title-1')).toHaveText('Rede Voltou');
   });
+
+  test('3. "Ver comentários" mocka endpoint de reviews (/movie/:id/reviews)', async ({ page }) => {
+    await page.route('**/movie/popular*', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          results: [{ id: 42, title: 'Filme com Reviews', overview: '', release_date: '2026-01-01', vote_average: 8 }],
+        }),
+      }),
+    );
+    await page.route('**/movie/42/reviews*', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          results: [
+            {
+              id: 'rev1',
+              author: 'Crítico Mockado',
+              content: 'Comentário de teste, interceptado antes da rede de verdade.',
+              author_details: { rating: 9 },
+            },
+          ],
+        }),
+      }),
+    );
+
+    await page.goto('/discover');
+    await page.getByTestId('discover-reviews-button-42').click();
+    await expect(page.getByTestId('discover-reviews-list-42')).toBeVisible();
+    await expect(page.getByTestId('discover-review-rev1')).toContainText('Crítico Mockado');
+  });
 });

@@ -18,28 +18,39 @@ export interface TMDBMovie extends Movie {
   poster_path: string | null;
 }
 
-interface TMDBResponse {
+interface TMDBMoviesResponse {
   results: TMDBMovie[];
+}
+
+export interface TMDBReview {
+  id: string;
+  author: string;
+  content: string;
+  author_details: { rating: number | null };
+}
+
+interface TMDBReviewsResponse {
+  results: TMDBReview[];
 }
 
 export function posterUrl(path: string | null): string | null {
   return path ? `${POSTER_BASE}${path}` : null;
 }
 
-export async function getDiscoverMovies(): Promise<TMDBMovie[]> {
-  // Sem VITE_TMDB_TOKEN: a chamada sai do mesmo jeito (sem auth) — em uso
-  // manual real, o TMDB responde 401 e cai no !res.ok abaixo. Em teste, o
-  // page.route() intercepta ANTES disso (não depende do token).
-  //
-  // TMDB tem 2 formatos de credencial (a página de Settings → API mostra os
-  // dois): "API Read Access Token" (v4, JWT longo, começa com eyJ) vai no
-  // header Authorization; "API Key" (v3, 32 chars hex) vai como query param
-  // ?api_key=. Detecta automaticamente pra aceitar qualquer um que o aluno
-  // copiar.
+// Sem VITE_TMDB_TOKEN: a chamada sai do mesmo jeito (sem auth) — em uso
+// manual real, o TMDB responde 401 e cai no !res.ok de quem chama. Em
+// teste, o page.route() intercepta ANTES disso (não depende do token).
+//
+// TMDB tem 2 formatos de credencial (a página de Settings → API mostra os
+// dois): "API Read Access Token" (v4, JWT longo, começa com eyJ) vai no
+// header Authorization; "API Key" (v3, 32 chars hex) vai como query param
+// ?api_key=. Detecta automaticamente pra aceitar qualquer um que o aluno
+// copiar.
+async function tmdbFetch(path: string): Promise<Response> {
   const token = import.meta.env.VITE_TMDB_TOKEN as string | undefined;
   const isV4 = !!token && token.startsWith('eyJ');
 
-  const url = new URL(`${TMDB_BASE}/movie/popular`);
+  const url = new URL(`${TMDB_BASE}${path}`);
   url.searchParams.set('language', 'pt-BR');
   url.searchParams.set('page', '1');
   if (token && !isV4) url.searchParams.set('api_key', token);
@@ -55,7 +66,17 @@ export async function getDiscoverMovies(): Promise<TMDBMovie[]> {
         : `TMDB respondeu HTTP ${res.status}`,
     );
   }
+  return res;
+}
 
-  const data: TMDBResponse = await res.json();
+export async function getDiscoverMovies(): Promise<TMDBMovie[]> {
+  const res = await tmdbFetch('/movie/popular');
+  const data: TMDBMoviesResponse = await res.json();
+  return data.results;
+}
+
+export async function getMovieReviews(id: number): Promise<TMDBReview[]> {
+  const res = await tmdbFetch(`/movie/${id}/reviews`);
+  const data: TMDBReviewsResponse = await res.json();
   return data.results;
 }
