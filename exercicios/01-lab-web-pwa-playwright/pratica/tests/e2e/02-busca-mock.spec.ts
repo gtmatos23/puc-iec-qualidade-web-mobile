@@ -9,6 +9,12 @@
 // Legenda:  🧑‍🏫 = professor faz no screencast · 🧑‍💻 = você faz sozinho
 //           FÁCIL = arrange/act prontos, você escreve o expect
 //           🔴 DESAFIO = você escreve o teste inteiro
+//
+// Progressão (fica mais difícil de cima pra baixo):
+//   1-2  só navegar + 1 assert (sem mock)
+//   3    busca real (sem mock ainda, mas já por testID específico)
+//   4    1º mock (fulfill já escrito, só falta o assert)
+//   5-7  desafio: mock inteiro do zero
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { test, expect } from '@playwright/test';
@@ -16,12 +22,30 @@ import { test, expect } from '@playwright/test';
 // ⚠️ PITFALL REAL: o CineFav é uma PWA — o Service Worker intercepta os fetch
 // e responde do cache. Requisição que o SW responde NUNCA chega no page.route!
 // Pra testar network mocking, desligamos o SW neste arquivo.
-// (Sem esta linha, o teste 2 falha de um jeito misterioso. Guarde esse pitfall.)
+// (Sem esta linha, o teste 4 falha de um jeito misterioso. Guarde esse pitfall.)
 test.use({ serviceWorkers: 'block' });
 
 test.describe('Busca + network mocking', () => {
-  // 🧑‍🏫 1. FÁCIL — busca real (sem mock): dado do catálogo aparece
-  test('1. buscar "Matrix" mostra o resultado', async ({ page }) => {
+  // 🧑‍🏫 1. FÁCIL — só navegar: a tela abriu?
+  test('1. abrir a tela de busca', async ({ page }) => {
+    await page.goto('/search');
+
+    // TODO: espere a tela ficar visível.
+    // Dica: o testID da tela é search-screen.
+    // await expect(page.getByTestId('search-screen'))....
+  });
+
+  // 🧑‍🏫 2. FÁCIL — assert de texto (sem testID ainda)
+  test('2. título da tela de busca aparece', async ({ page }) => {
+    await page.goto('/search');
+
+    // TODO: espere o texto "Buscar" ficar visível.
+    // Dica: page.getByText('Buscar') — é o <h1> da tela.
+    // await expect(page.getByText('Buscar'))....
+  });
+
+  // 🧑‍🏫 3. FÁCIL — busca real (sem mock): dado do catálogo aparece
+  test('3. buscar "Matrix" mostra o resultado', async ({ page }) => {
     await page.goto('/search');
     await page.getByTestId('search-input').fill('Matrix');
 
@@ -30,8 +54,8 @@ test.describe('Busca + network mocking', () => {
     // await expect(page.getByTestId('search-result-603'))....
   });
 
-  // 🧑‍💻 2. FÁCIL — mock: o "backend" devolve um filme que NÃO existe no catálogo
-  test('2. route() com fulfill injeta um filme inventado', async ({ page }) => {
+  // 🧑‍💻 4. FÁCIL — mock: o "backend" devolve um filme que NÃO existe no catálogo
+  test('4. route() com fulfill injeta um filme inventado', async ({ page }) => {
     // Intercepta ANTES do goto — rota registrada tarde não intercepta nada.
     await page.route('**/api/movies.json', (route) =>
       route.fulfill({
@@ -56,17 +80,28 @@ test.describe('Busca + network mocking', () => {
     // TODO: verifique que o título "O Filme Que Só Existe No Mock" aparece
   });
 
-  // 🧑‍💻 3. 🔴 DESAFIO — erro de rede: catálogo indisponível
-  test('3. falha na API mostra estado de erro com retry', async ({ page }) => {
-    // TODO: intercepte '**/api/movies.json' com route.abort()
-    // TODO: navegue pra '/qa' (o catálogo mockado — "/" hoje é o Discover, TMDB real)
-    // TODO: espere o estado de erro: testID movielist-error
-    // TODO: agora "conserte a rede": page.unroute('**/api/movies.json')
+  // 🧑‍💻 5. 🔴 DESAFIO — matriz de erros HTTP: o catálogo falha de formas diferentes
+  // Mesmo padrão do teste 4 (route.fulfill) — só troca o status. Testar vários
+  // códigos garante que o app mostra erro genérico pra QUALQUER falha, não só
+  // pra uma (raciocínio de QA: classes de equivalência de erro, não só 1 caso).
+  for (const status of [404, 500, 503]) {
+    test(`5. catálogo responde ${status} mostra estado de erro`, async ({ page }) => {
+      // TODO: route.fulfill com este status (contentType json, body '{}')
+      // TODO: navegue pra '/qa'
+      // TODO: espere o testID movielist-error ficar visível
+    });
+  }
+
+  // 🧑‍💻 6. 🔴 DESAFIO — recuperação: rede cai, depois volta, retry funciona
+  test('6. rede fora do ar, depois volta — retry recarrega o catálogo', async ({ page }) => {
+    // TODO: intercepte '**/api/movies.json' com route.abort() (rede totalmente fora)
+    // TODO: navegue pra '/qa' e espere movielist-error
+    // TODO: "conserte a rede": page.unroute('**/api/movies.json')
     // TODO: clique em movielist-retry-button e espere movielist-grid aparecer
   });
 
-  // 🧑‍💻 4. 🔴 DESAFIO — busca vazia
-  test('4. busca sem resultado mostra estado vazio', async ({ page }) => {
+  // 🧑‍💻 7. 🔴 DESAFIO — busca vazia
+  test('7. busca sem resultado mostra estado vazio', async ({ page }) => {
     // TODO: sem mock nenhum, busque um título que não existe (ex.: "xyzw")
     // TODO: espere o testID search-empty ficar visível
   });
