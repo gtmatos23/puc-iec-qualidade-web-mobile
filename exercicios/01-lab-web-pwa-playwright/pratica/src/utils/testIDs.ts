@@ -20,6 +20,15 @@ export const testIDs = {
     error: 'login-error-message',
   },
 
+  register: {
+    toggle: 'auth-mode-toggle',
+    nameInput: 'register-name-input',
+    emailInput: 'register-email-input',
+    passwordInput: 'register-password-input',
+    submit: 'register-submit-button',
+    error: 'register-error-message',
+  },
+
   movieList: {
     screen: 'movielist-screen',
     searchButton: 'movielist-search-button',
@@ -83,8 +92,50 @@ export const testIDs = {
     reviewItem: (reviewId: string) => `discover-review-${reviewId}`,
   },
 
+  comments: {
+    box: 'comments-box',
+    input: 'comment-input',
+    submit: 'comment-submit-button',
+    item: (id: string) => `comment-item-${id}`,
+    status: (id: string) => `comment-status-${id}`,
+    empty: 'comments-empty',
+  },
+
+  pwa: {
+    screen: 'pwa-screen',
+    back: 'pwa-back-button',
+    check: (name: string) => `pwa-check-${name}`,
+    installButton: 'pwa-install-button',
+    shareButton: 'pwa-share-button',
+    badgeButton: 'pwa-badge-button',
+    persistButton: 'pwa-persist-button',
+    resetButton: 'pwa-reset-button',
+    storage: 'pwa-storage',
+    result: 'pwa-action-result',
+  },
+
+  discoverTools: {
+    search: 'discover-search-input',
+    sort: (key: string) => `discover-sort-${key}`,
+    genre: (id: number | 'all') => `discover-genre-${id}`,
+    fromCache: 'discover-from-cache',
+    empty: 'discover-empty',
+    sentinel: 'discover-sentinel',
+  },
+
+  detailExtras: {
+    share: 'detail-share-button',
+    genres: 'detail-genres',
+  },
+
   shell: {
+    logout: 'logout-button',
+    updateToast: 'update-toast',
+    updateButton: 'update-reload-button',
+    installBanner: 'install-button',
+    nav: 'app-nav',
     offlineBanner: 'offline-banner',
+    remoteBanner: 'remote-banner',
     routeLoading: 'route-loading',
     errorBoundary: 'error-boundary',
   },

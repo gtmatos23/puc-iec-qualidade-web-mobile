@@ -4,6 +4,10 @@ import { currentUser } from '@/store/auth';
 import { testIDs } from '@/utils/testIDs';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import OfflineBanner from '@/components/OfflineBanner';
+import RemoteBanner from '@/components/RemoteBanner';
+import UpdateToast from '@/components/UpdateToast';
+import { setBadge } from '@/pwa/badge';
+import { useFavorites } from '@/store/favorites';
 import Login from '@/screens/Login';
 import Discover from '@/screens/Discover';
 import MovieList from '@/screens/MovieList';
@@ -14,6 +18,7 @@ const Search = lazy(() => import('@/screens/Search'));
 const Favorites = lazy(() => import('@/screens/Favorites'));
 const MovieDetail = lazy(() => import('@/screens/MovieDetail'));
 const DiscoverDetail = lazy(() => import('@/screens/DiscoverDetail'));
+const PwaPanel = lazy(() => import('@/screens/PwaPanel'));
 
 function RequireAuth({ children }: { children: ReactNode }) {
   if (!currentUser()) return <Navigate to="/login" replace />;
@@ -22,6 +27,12 @@ function RequireAuth({ children }: { children: ReactNode }) {
 
 export default function App() {
   const location = useLocation();
+  const favorites = useFavorites();
+
+  // Badging API: contador de favoritos no ícone do app instalado.
+  useEffect(() => {
+    void setBadge(favorites.length);
+  }, [favorites.length]);
 
   // Sinal de "app interativo": os testes esperam por este atributo em vez de
   // sleep arbitrário (estratégia de waiting — aula de SPA).
@@ -32,6 +43,8 @@ export default function App() {
   return (
     <ErrorBoundary>
       <OfflineBanner />
+      <RemoteBanner />
+      <UpdateToast />
       <Suspense
         fallback={
           <div className="route-loading" data-testid={testIDs.shell.routeLoading}>
@@ -97,6 +110,14 @@ export default function App() {
             element={
               <RequireAuth>
                 <DiscoverDetail />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/pwa"
+            element={
+              <RequireAuth>
+                <PwaPanel />
               </RequireAuth>
             }
           />
