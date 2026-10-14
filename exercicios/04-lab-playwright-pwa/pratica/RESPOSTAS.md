@@ -1,7 +1,7 @@
 # RESPOSTAS — Lab Playwright PWA
 
-**Nome:** <preencher>
-**Login do GitHub:** <preencher>
+**Nome:** <Gustavo Matos>
+**Login do GitHub:** <gtmatos23>
 **Usei IA?** Sim — assistente de IA no VS Code para acelerar a escrita e revisão dos testes E2E, consultar seletores e estruturar estas explicações técnicas, conforme permitido pelas regras da disciplina.
 
 ---
