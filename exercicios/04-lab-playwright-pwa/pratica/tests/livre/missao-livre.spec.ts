@@ -1,47 +1,52 @@
-// tests/livre/missao-livre.spec.ts
-// ─────────────────────────────────────────────────────────────────────────────
-// ✅ AVALIATIVO (correção MANUAL) — MISSÃO LIVRE (≈ 20 min)
-//
-// 🎯 Aqui NÃO tem roteiro. Você é o(a) QA: escolhe o fluxo, decide o que testar e
-//    justifica. É a parte que mais mostra como você pensa.
-//
-// 🧩 O que fazer
-//   1. ESCOLHA UM fluxo do CineFav que os blocos A–F não testaram. Sugestões:
-//        • remover um favorito pela tela /favorites
-//        • a tela /pwa (painel "Raio-X da PWA") e seus botões
-//        • logout protege as rotas (deslogado, abrir /favorites manda pro /login)
-//        • comentário: vazio, muito longo (limite 280), vários comentários
-//        • busca com espaços/maiúsculas ("  MATRIX ")
-//        • botão Voltar do detalhe (histórico do navegador)
-//      …ou um fluxo que VOCÊ achar importante. Dica: use o app de verdade 3 minutos antes!
-//   2. ESCREVA 3 testes do MESMO fluxo, com nome começando por:
-//        "feliz:"     o caminho normal funciona
-//        "negativo:"  algo dá errado e o app reage direito
-//        "borda:"     o caso limite (vazio, repetido, máximo, recarregar…)
-//   3. Em pelo menos UM deles use algo que você NÃO usou nos blocos A–F — por exemplo
-//      test.step · page.goBack() · .not (ex.: not.toBeVisible) · test.fail() · toHaveScreenshot.
-//   4. Cada teste precisa de expect de verdade (asserção que falharia se o app quebrasse).
-//   5. Responda a pergunta 6 do  RESPOSTAS.md  (por que ESSE fluxo, que risco ele cobre).
-//
-// 🔎 BÔNUS exploratório (vale reconhecimento): achou algo ESTRANHO no app? Escreva um
-//    teste que documenta o comportamento e marque com  test.fixme()  ou  test.fail()
-//    + um comentário explicando por que é suspeito. Isso é bug report em forma de código.
-//
-// ✅ Validar:  npx playwright test livre   → verde nos 3 testes
-//
-// APAGUE o teste de exemplo abaixo e escreva os seus.
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { test, expect } from '@playwright/test';
-import { falta } from '../support/todo';
 
-test.describe('Missão livre — <nome do seu fluxo>', () => {
-  test('feliz: <descreva>', async ({ page }) => {
-    await page.goto('/qa');
-    void expect;
-    falta('Missão livre — teste feliz');
+test.describe('Missão livre — comentários no detalhe do filme', () => {
+  test('feliz: deve postar um comentário em um filme e exibi-lo imediatamente na lista', async ({ page }) => {
+    await page.goto('/movie/603');
+    await expect(page.getByTestId('detail-title')).toHaveText('Matrix');
+
+    await page.getByTestId('comment-input').fill('Uma história que continua atual.');
+    await page.getByTestId('comment-submit-button').click();
+
+    const comment = page.locator('[data-testid^="comment-item-"]').first();
+    await expect(comment).toContainText('Uma história que continua atual.');
+    await expect(page.locator('[data-testid^="comment-item-"]')).toHaveCount(1);
   });
 
-  // test('negativo: <descreva>', async ({ page }) => { ... });
-  // test('borda: <descreva>', async ({ page }) => { ... });
+  test('negativo: não deve permitir submeter comentário em branco ou com erro simulado de rede (botão desabilitado ou mensagem de erro)', async ({
+    page,
+  }) => {
+    await page.goto('/movie/603');
+    await expect(page.getByTestId('detail-title')).toHaveText('Matrix');
+
+    const input = page.getByTestId('comment-input');
+    const submit = page.getByTestId('comment-submit-button');
+    await expect(submit).toBeDisabled();
+
+    await input.fill('   ');
+    await expect(submit).toBeDisabled();
+    await expect(page.getByTestId('comments-empty')).toBeVisible();
+    await expect(page.locator('[data-testid^="comment-item-"]')).toHaveCount(0);
+  });
+
+  test('borda: deve tratar comentário longo no limite de caracteres ou caracteres especiais (XSS/emojis) sem quebrar o layout', async ({
+    page,
+  }) => {
+    const prefix = '<script>alert(1)</script> ';
+    const comment = `${prefix}${'😀'.repeat((280 - prefix.length) / 2)}`;
+    expect(comment).toHaveLength(280);
+
+    await page.goto('/movie/603');
+    await expect(page.getByTestId('detail-title')).toHaveText('Matrix');
+
+    const input = page.getByTestId('comment-input');
+    await expect(input).toHaveAttribute('maxlength', '280');
+    await input.fill(comment);
+    await expect(input).toHaveValue(comment);
+    await page.getByTestId('comment-submit-button').click();
+
+    const commentText = page.locator('[data-testid^="comment-item-"]').first().locator('p');
+    await expect(commentText).toBeVisible();
+    await expect(commentText).toHaveText(comment);
+  });
 });
