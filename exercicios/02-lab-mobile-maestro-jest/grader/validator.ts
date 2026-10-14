@@ -1,4 +1,4 @@
-// Validator — Lab Mobile (Maestro + Jest) · 15 pts
+// Validator — Lab Mobile (Maestro + Jest) · 10 pts
 // Rubrica: enunciado.md do lab. Nota AUTOMÁTICA = piso (estrutural, parse-only).
 // Execução real (vídeos iOS/Android) e CI verde são manuais (Canvas).
 
@@ -41,8 +41,8 @@ const criteria: Criterion[] = []
   criteria.push({
     key: 'unit-jest',
     label: 'Testes unitários Jest (02-authStore, 5 testes)',
-    weight: 4,
-    earned: complete ? 4 : raw !== null && expects >= 4 ? 2 : 0,
+    weight: 2.5,
+    earned: complete ? 2.5 : raw !== null && expects >= 4 ? 1.25 : 0,
     note: raw === null ? 'arquivo não encontrado'
       : complete ? undefined
       : `${todos} TODO(s) pendente(s) · ${expects} expect(s) (esperado ≥8)`,
@@ -63,8 +63,8 @@ const criteria: Criterion[] = []
   criteria.push({
     key: 'integration',
     label: 'Integração RNTL (navegação + estado real)',
-    weight: 4,
-    earned: complete ? 4 : raw !== null && missing.length <= 1 ? 2 : 0,
+    weight: 2.5,
+    earned: complete ? 2.5 : raw !== null && missing.length <= 1 ? 1.25 : 0,
     note: raw === null ? 'arquivo não encontrado'
       : complete ? undefined
       : [todos ? `${todos} TODO(s)` : null, missing.length ? `falta: ${missing.map(m => m.what).join(', ')}` : null]
@@ -85,11 +85,11 @@ const criteria: Criterion[] = []
     if (ok) complete++
     else notes.push(`${f}: ${todos > 0 ? `${todos} TODO(s)` : 'sem assertVisible'}`)
   }
-  const earned = complete >= 5 ? 3 : complete >= 3 ? 2 : complete >= 1 ? 1 : 0
+  const earned = complete >= 5 ? 2 : complete >= 3 ? 1.5 : complete >= 1 ? 0.5 : 0
   criteria.push({
     key: 'flows',
     label: `5 flows Maestro completos (${complete}/5)`,
-    weight: 3,
+    weight: 2,
     earned,
     note: notes.length ? notes.join(' · ') : undefined,
   })
@@ -99,7 +99,7 @@ const criteria: Criterion[] = []
 criteria.push({
   key: 'exec-android',
   label: 'Execução real Android Emulator (vídeo)',
-  weight: 1,
+  weight: 0.5,
   earned: 0,
   manual: true,
   note: 'avaliação manual (Canvas)',
@@ -107,7 +107,7 @@ criteria.push({
 criteria.push({
   key: 'exec-ios',
   label: 'Execução real iOS Simulator (vídeo)',
-  weight: 1,
+  weight: 0.5,
   earned: 0,
   manual: true,
   note: 'avaliação manual (Canvas)',

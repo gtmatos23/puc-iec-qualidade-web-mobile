@@ -1,0 +1,59 @@
+# CI do ALUNO — roda no SEU fork a cada push (habilite o Actions na aba Actions do fork).
+#
+# Este arquivo precisa estar na RAIZ do repositório (.github/workflows/): o GitHub só lê
+# workflows daí. Ele roda a suíte do lab 04 e fica VERDE só quando todos os desafios
+# estiverem feitos (os que ainda têm falta(...) deixam o CI vermelho — é esperado no começo).
+#
+# O repositório do professor não executa isto (só o fork do aluno).
+
+name: lab-playwright-pwa
+
+on:
+  push:
+    paths:
+      - 'exercicios/04-lab-playwright-pwa/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  APP_DIR: exercicios/04-lab-playwright-pwa/pratica
+
+jobs:
+  test:
+    if: github.repository_owner != 'jacksonsmith'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instala dependências
+        working-directory: ${{ env.APP_DIR }}
+        run: npm ci
+
+      - name: Instala o Chromium do Playwright
+        working-directory: ${{ env.APP_DIR }}
+        run: npx playwright install --with-deps chromium
+
+      - name: Roda a suíte (3 vezes seguidas — critério eliminatório)
+        working-directory: ${{ env.APP_DIR }}
+        run: npx playwright test --repeat-each=3 --reporter=list
+
+      - name: Lint dos testes
+        if: ${{ !cancelled() }}
+        working-directory: ${{ env.APP_DIR }}
+        run: npm run lint
+
+      - name: Sobe o relatório (traces dos que falharam)
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: ${{ env.APP_DIR }}/test-results
+          retention-days: 5
+          if-no-files-found: ignore

@@ -1,0 +1,11 @@
+node_modules
+dist/
+dev-dist/
+playwright-report/
+test-results/
+playwright-results.json
+check-results.json
+playwright/.auth/
+*.local
+.env
+.DS_Store

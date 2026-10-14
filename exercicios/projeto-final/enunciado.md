@@ -1,8 +1,8 @@
-# Projeto Final Individual (30 pts — eliminatório)
+# Projeto Final Individual (50 pts — eliminatório)
 
-**Disciplina:** Qualidade em Aplicações Web e Mobile (EAD)
+**Disciplina:** Qualidade em Aplicações Web e Mobile
 **Entrega:** repositório GitHub próprio + relatório + vídeo demo
-**Valor:** 30 pontos · **obrigatório pra aprovação**
+**Valor:** 50 pontos · **obrigatório pra aprovação**
 
 ---
 
@@ -16,12 +16,12 @@ com as mesmas superfícies). É a integração das 6 frentes do curso numa entre
 
 | # | Requisito | Pontos |
 |---|-----------|--------|
-| 1 | Suíte web Playwright: 10+ testes E2E + visual regression (3 viewports) | 8 |
-| 2 | Suíte PWA: SW tests + offline + Lighthouse CI com budget | 5 |
-| 3 | Suíte Maestro mobile: 5+ flows em iOS + Android | 7 |
-| 4 | Componente IA não trivial (ver opções abaixo) | 6 |
-| 5 | CI/CD funcional com sharding + quality gates | 2 |
-| 6 | Relatório técnico (8 pgs) | 2 |
+| 1 | Suíte web Playwright: 10+ testes E2E + visual regression (3 viewports) | 12 |
+| 2 | Suíte PWA: SW tests + offline + Lighthouse CI com budget | 9 |
+| 3 | Suíte Maestro mobile: 5+ flows em iOS + Android | 11 |
+| 4 | Componente IA não trivial (ver opções abaixo) | 10 |
+| 5 | CI/CD funcional com sharding + quality gates | 5 |
+| 6 | Relatório técnico (8 pgs) | 3 |
 
 ### Opções de componente IA (escolha UMA)
 

@@ -1,7 +1,7 @@
 # Pipeline IA de geração de testes — prática
 
 Pipeline **user story → LLM gera teste Playwright → executa → healing loop**,
-rodando contra o CineFav Web (lab 02). Você completa os TODOs de
+rodando contra o CineFav Web (Lab Playwright PWA). Você completa os TODOs de
 `src/02-healing-loop.ts` e `src/03-visual-diff.ts`; o gerador (`src/01-gen-test.ts`)
 já vem resolvido.
 
@@ -26,8 +26,8 @@ cp .env.example .env    # cole seu token do GitHub (instruções no arquivo)
 > **Token GitHub (grátis):** Settings → Developer settings → Fine-grained tokens
 > → Generate new → em *Account permissions* marque só **Models: Read** → Generate.
 
-> **Pré-requisito:** o lab 02 instalado e buildado (o app alvo dos testes gerados):
-> `cd ../../01-lab-web-pwa-playwright/pratica && npm install && npm run build`
+> **Pré-requisito:** o Lab Playwright PWA instalado (o app alvo dos testes gerados):
+> `cd ../../04-lab-playwright-pwa/pratica && npm ci`
 
 ## Os 3 passos
 

@@ -13,7 +13,7 @@
 
 ## Contexto técnico (pro gerador)
 
-- App em http://localhost:4173 · login: aluno@puc.br / 1234 (tela `/login`)
+- App em http://localhost:4174 · login: aluno@puc.br / 1234 (tela `/login`)
 - Seletores via `data-testid` — convenção `<tela>-<elemento>` (ver testIDs do app)
 - login: `login-email-input`, `login-password-input`, `login-submit-button`
 - lista: `movielist-screen`, `movielist-grid`, `movielist-favorites-button`

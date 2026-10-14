@@ -1,0 +1,254 @@
+[
+  {
+    "id": 603,
+    "title": "Matrix",
+    "overview": "Um hacker descobre que a realidade é uma simulação e se junta à rebelião contra as máquinas.",
+    "release_date": "1999-03-31",
+    "vote_average": 8.2
+  },
+  {
+    "id": 27205,
+    "title": "A Origem",
+    "overview": "Um ladrão que rouba segredos através dos sonhos recebe a missão de plantar uma ideia na mente de um herdeiro.",
+    "release_date": "2010-07-15",
+    "vote_average": 8.4
+  },
+  {
+    "id": 157336,
+    "title": "Interestelar",
+    "overview": "Exploradores viajam por um buraco de minhoca no espaço na tentativa de garantir a sobrevivência da humanidade.",
+    "release_date": "2014-11-05",
+    "vote_average": 8.4
+  },
+  {
+    "id": 155,
+    "title": "Batman: O Cavaleiro das Trevas",
+    "overview": "Batman enfrenta o Coringa, um criminoso que mergulha Gotham no caos e na anarquia.",
+    "release_date": "2008-07-18",
+    "vote_average": 8.5
+  },
+  {
+    "id": 19995,
+    "title": "Avatar",
+    "overview": "Um fuzileiro paraplégico é enviado à lua Pandora e se vê dividido entre seguir ordens e proteger um novo mundo.",
+    "release_date": "2009-12-18",
+    "vote_average": 7.6
+  },
+  {
+    "id": 24428,
+    "title": "Os Vingadores",
+    "overview": "Os super-heróis mais poderosos da Terra se unem para deter Loki e seu exército alienígena.",
+    "release_date": "2012-05-04",
+    "vote_average": 7.7
+  },
+  {
+    "id": 680,
+    "title": "Pulp Fiction",
+    "overview": "As vidas de dois assassinos da máfia, um boxeador e um casal de assaltantes se entrelaçam.",
+    "release_date": "1994-09-10",
+    "vote_average": 8.5
+  },
+  {
+    "id": 13,
+    "title": "Forrest Gump",
+    "overview": "A história de um homem simples que testemunha e influencia vários eventos marcantes do século XX.",
+    "release_date": "1994-07-06",
+    "vote_average": 8.5
+  },
+  {
+    "id": 550,
+    "title": "Clube da Luta",
+    "overview": "Um homem insone e um vendedor de sabonetes formam um clube de luta clandestino que vira algo maior.",
+    "release_date": "1999-10-15",
+    "vote_average": 8.4
+  },
+  {
+    "id": 122,
+    "title": "O Senhor dos Anéis: O Retorno do Rei",
+    "overview": "Gandalf e Aragorn lideram o mundo dos homens contra Sauron enquanto Frodo se aproxima da Montanha da Perdição.",
+    "release_date": "2003-12-01",
+    "vote_average": 8.5
+  },
+  {
+    "id": 11,
+    "title": "Star Wars: Uma Nova Esperança",
+    "overview": "Luke Skywalker se junta a aliados improváveis para salvar a galáxia do Império e da Estrela da Morte.",
+    "release_date": "1977-05-25",
+    "vote_average": 8.2
+  },
+  {
+    "id": 769,
+    "title": "Os Bons Companheiros",
+    "overview": "A ascensão e queda de um gângster ao longo de três décadas no submundo de Nova York.",
+    "release_date": "1990-09-12",
+    "vote_average": 8.5
+  },
+  {
+    "id": 9001,
+    "title": "Gladiador",
+    "overview": "Um general romano traído busca vingança contra o imperador que matou sua família.",
+    "release_date": "2000-05-05",
+    "vote_average": 8.2
+  },
+  {
+    "id": 9002,
+    "title": "O Poderoso Chefão",
+    "overview": "A saga da família Corleone no mundo do crime organizado em Nova York.",
+    "release_date": "1972-03-24",
+    "vote_average": 8.7
+  },
+  {
+    "id": 9003,
+    "title": "Cidade de Deus",
+    "overview": "Dois jovens seguem caminhos opostos em meio à violência de uma favela carioca.",
+    "release_date": "2002-05-18",
+    "vote_average": 8.4
+  },
+  {
+    "id": 9004,
+    "title": "O Exterminador do Futuro 2",
+    "overview": "Um ciborgue é enviado para proteger John Connor de um inimigo ainda mais avançado.",
+    "release_date": "1991-07-01",
+    "vote_average": 8.3
+  },
+  {
+    "id": 9005,
+    "title": "Coringa",
+    "overview": "A origem de um comediante fracassado que se transforma em um dos maiores vilões de Gotham.",
+    "release_date": "2019-10-02",
+    "vote_average": 8.2
+  },
+  {
+    "id": 9006,
+    "title": "Parasita",
+    "overview": "Uma família pobre se infiltra na vida de uma família rica, com consequências inesperadas.",
+    "release_date": "2019-05-30",
+    "vote_average": 8.5
+  },
+  {
+    "id": 9007,
+    "title": "Vingadores: Ultimato",
+    "overview": "Os heróis remanescentes se unem numa última tentativa de desfazer os atos de Thanos.",
+    "release_date": "2019-04-24",
+    "vote_average": 8.3
+  },
+  {
+    "id": 9008,
+    "title": "Jurassic Park",
+    "overview": "Um bilionário cria um parque com dinossauros clonados que logo sai de controle.",
+    "release_date": "1993-06-11",
+    "vote_average": 8.1
+  },
+  {
+    "id": 9009,
+    "title": "O Rei Leão",
+    "overview": "Um filhote de leão foge após a morte do pai e precisa retomar seu lugar como rei.",
+    "release_date": "1994-06-15",
+    "vote_average": 8.2
+  },
+  {
+    "id": 9010,
+    "title": "Titanic",
+    "overview": "Um romance proibido floresce a bordo do navio mais famoso da história, em sua viagem fatídica.",
+    "release_date": "1997-11-18",
+    "vote_average": 7.9
+  },
+  {
+    "id": 9011,
+    "title": "Pantera Negra",
+    "overview": "O rei de Wakanda precisa proteger seu reino tecnologicamente avançado de ameaças externas.",
+    "release_date": "2018-02-13",
+    "vote_average": 7.4
+  },
+  {
+    "id": 9012,
+    "title": "Whiplash: Em Busca da Perfeição",
+    "overview": "Um jovem baterista se submete aos métodos brutais de um professor obcecado por excelência.",
+    "release_date": "2014-10-10",
+    "vote_average": 8.4
+  },
+  {
+    "id": 9013,
+    "title": "Django Livre",
+    "overview": "Um ex-escravo se torna caçador de recompensas e parte em busca de sua esposa.",
+    "release_date": "2012-12-25",
+    "vote_average": 8.2
+  },
+  {
+    "id": 9014,
+    "title": "A Lista de Schindler",
+    "overview": "Um empresário alemão salva a vida de mais de mil refugiados judeus durante o Holocausto.",
+    "release_date": "1993-12-15",
+    "vote_average": 8.6
+  },
+  {
+    "id": 9015,
+    "title": "Mad Max: Estrada da Fúria",
+    "overview": "Numa terra devastada, uma guerreira rebelde ajuda escravas a fugir de um tirano.",
+    "release_date": "2015-05-15",
+    "vote_average": 8.1
+  },
+  {
+    "id": 9016,
+    "title": "Toy Story",
+    "overview": "Os brinquedos de um menino ganham vida quando ele não está por perto.",
+    "release_date": "1995-11-22",
+    "vote_average": 7.9
+  },
+  {
+    "id": 9017,
+    "title": "Os Suspeitos",
+    "overview": "Cinco criminosos se unem num golpe que revela uma conspiração muito maior.",
+    "release_date": "1995-08-16",
+    "vote_average": 8.1
+  },
+  {
+    "id": 9018,
+    "title": "A Rede Social",
+    "overview": "A história da criação do Facebook e as disputas legais que se seguiram.",
+    "release_date": "2010-10-01",
+    "vote_average": 7.3
+  },
+  {
+    "id": 9019,
+    "title": "Coração Valente",
+    "overview": "Um guerreiro escocês lidera uma rebelião contra o domínio inglês no século XIII.",
+    "release_date": "1995-05-24",
+    "vote_average": 7.8
+  },
+  {
+    "id": 9020,
+    "title": "O Labirinto do Fauno",
+    "overview": "Uma menina escapa dos horrores da guerra civil espanhola num mundo de fantasia sombrio.",
+    "release_date": "2006-05-27",
+    "vote_average": 8.2
+  },
+  {
+    "id": 9021,
+    "title": "Shrek",
+    "overview": "Um ogro solitário precisa resgatar uma princesa para recuperar seu pântano.",
+    "release_date": "2001-04-22",
+    "vote_average": 7.8
+  },
+  {
+    "id": 9022,
+    "title": "Procurando Nemo",
+    "overview": "Um peixe-palhaço atravessa o oceano para encontrar seu filho perdido.",
+    "release_date": "2003-05-30",
+    "vote_average": 7.8
+  },
+  {
+    "id": 9023,
+    "title": "O Grande Hotel Budapeste",
+    "overview": "As aventuras de um lendário concierge e seu protegido num hotel europeu entre guerras.",
+    "release_date": "2014-02-26",
+    "vote_average": 8.1
+  },
+  {
+    "id": 9024,
+    "title": "Her",
+    "overview": "Um homem solitário desenvolve um relacionamento com um sistema operacional de inteligência artificial.",
+    "release_date": "2013-12-18",
+    "vote_average": 7.9
+  }
+]

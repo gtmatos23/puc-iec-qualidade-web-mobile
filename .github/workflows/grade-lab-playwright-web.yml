@@ -1,0 +1,117 @@
+name: Grade — Lab Playwright Web (busca + mock)
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'exercicios/01-lab-playwright-web/**'
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # 1. Checkout base (grader confiável do prof)
+      - name: Checkout base
+        uses: actions/checkout@v4
+
+      # 2. Checkout head do PR em pasta isolada (entrega não-confiável — só leitura)
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: _pr
+          persist-credentials: false
+          allow-unsafe-pr-checkout: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install grader deps
+        run: npm install
+        working-directory: exercicios/01-lab-playwright-web/grader
+
+      - name: Run validator
+        id: grade
+        run: |
+          npx ts-node validator.ts --entrega ../../../_pr/exercicios/01-lab-playwright-web
+        working-directory: exercicios/01-lab-playwright-web/grader
+
+      - name: Upload grade artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: grade-pr${{ github.event.pull_request.number }}
+          path: exercicios/01-lab-playwright-web/grader/grade.json
+          retention-days: 90
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs')
+            const gradePath = 'exercicios/01-lab-playwright-web/grader/grade.json'
+
+            let grade
+            try {
+              grade = JSON.parse(fs.readFileSync(gradePath, 'utf8'))
+            } catch (e) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: '❌ **J.A.R.V.I.S.** — Não consegui avaliar sua entrega. **Isso pode ser falha do avaliador, não sua** — sua entrega não foi julgada. Avise o professor (ou faça um novo push em alguns minutos para tentar de novo).'
+              })
+              return
+            }
+
+            const { autoScore, maxAutoScore, breakdown } = grade
+
+            const body = [
+              '## 🤖 J.A.R.V.I.S. — Lab Playwright Web (busca + network mocking)',
+              '',
+              `**Nota automática: ${autoScore}/${maxAutoScore} pts**`,
+              '',
+              '> ℹ️ Este lab vale **10 pts**: a nota automática é a nota do lab (confirmada no Canvas). Teste que passa "vazio" (sem `await expect(...)`) não conta.',
+              '',
+              '### Detalhamento',
+              breakdown,
+              '',
+              '---',
+              '_Fez um ajuste? Só commitar e dar push — o bot reavalia automaticamente._',
+            ].join('\n')
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            })
+
+            const existing = comments.find(c =>
+              c.user.login === 'github-actions[bot]' &&
+              c.body.includes('Lab Playwright Web (busca')
+            )
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              })
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              })
+            }
