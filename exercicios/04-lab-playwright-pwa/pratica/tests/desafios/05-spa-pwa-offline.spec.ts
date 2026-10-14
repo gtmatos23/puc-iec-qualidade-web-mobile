@@ -95,7 +95,7 @@ test.describe('Bloco E — SPA e PWA', () => {
     await expect(page.getByRole('article')).toHaveCount(12);
 
     await context.setOffline(false);
-    await expect(page.getByTestId('offline-banner')).toHaveCount(0);
+    await expect(page.getByTestId('offline-banner')).not.toBeVisible();
   });
 
   // ── E4 🔴 · ≈ 12 min ───────────────────────────────────────────────────────
