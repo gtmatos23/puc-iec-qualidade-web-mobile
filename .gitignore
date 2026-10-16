@@ -56,3 +56,5 @@ android/build/
 
 # Claude Code
 .claude/
+
+*.apk
