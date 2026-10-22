@@ -3,9 +3,26 @@
 # (runScript: é pra ARQUIVO .js — pra JS inline use evalScript.)
 appId: com.puciec.cinefav
 ---
-- launchApp
-# TODO: faça login
-# TODO: use evalScript pra sortear um título e gravar em output.termo, ex:
-#   - evalScript: ${output.termo = ['Matrix', 'Avatar', 'Interestelar'][Math.floor(Math.random() * 3)]}
-# TODO: abra a busca, digite ${output.termo} no search-input
-# TODO: assertVisible do ${output.termo}
+- launchApp:
+    clearState: true
+
+# Login reutilizando o fragmento
+- runFlow: fragments/login.yaml
+
+# Sorteia um título e armazena na variável output.termo
+- evalScript: ${output.termo = ['Matrix', 'Avatar', 'Interestelar'][Math.floor(Math.random() * 3)]}
+
+# Abre a tela de busca pelo header
+- tapOn:
+    id: "movielist-search-button"
+
+- assertVisible:
+    id: "search-screen"
+
+# Digita o termo sorteado no campo de pesquisa
+- tapOn:
+    id: "search-input"
+- inputText: ${output.termo}
+
+# Valida que o título sorteado está visível no resultado
+- assertVisible: ${output.termo}

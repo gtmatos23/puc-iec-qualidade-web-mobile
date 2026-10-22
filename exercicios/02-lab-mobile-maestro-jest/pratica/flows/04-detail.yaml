@@ -2,10 +2,28 @@
 # Conceito: navegação entre telas + asserções em cada uma.
 appId: com.puciec.cinefav
 ---
-- launchApp
-# TODO: faça login
-# TODO: toque no card do filme "Matrix" — id "movie-card-603"
-# TODO: assertVisible da tela de detalhe — id "detail-screen"
-# TODO: favorite no detalhe — id "detail-favorite-button"
-# TODO: volte pra lista — id "detail-back-button"
-# TODO: assertVisible da lista de novo — id "movielist-screen"
+- launchApp:
+    clearState: true
+
+# Faz login usando o fragmento reutilizável
+- runFlow: fragments/login.yaml
+
+# Toque no card do filme "Matrix" — id "movie-card-603"
+- tapOn:
+    id: "movie-card-603"
+
+# AssertVisible da tela de detalhe — id "detail-screen"
+- assertVisible:
+    id: "detail-screen"
+
+# Favorite no detalhe — id "detail-favorite-button"
+- tapOn:
+    id: "detail-favorite-button"
+
+# Volte pra lista — id "detail-back-button"
+- tapOn:
+    id: "detail-back-button"
+
+# AssertVisible da lista de novo — id "movielist-screen"
+- assertVisible:
+    id: "movielist-screen"
