@@ -1,0 +1,38 @@
+# ✅ AVALIATIVO — NÍVEL 1 (guiado, ANTES do intervalo): REFATORE este flow.
+# Dá pra editar SEM emulador (é só YAML); quem tem emulador roda `maestro test flows/00-refatorar.yaml`.
+#
+# Ele PASSA, mas tem "cheiros":
+#   🦨 login copiado passo a passo (já existe _fragments/login.yaml)
+#   🦨 favoritar o filme 603 e o 27205: o mesmo passo escrito 2×, com o id colado no flow
+#   🦨 lê como infraestrutura, não como uma história do usuário
+#
+# Sua missão (juntos, ~20 min):
+#   1. Troque o login inteiro por UMA linha: runFlow: _fragments/login.yaml
+#   2. Crie _fragments/favoritar.yaml (recebe ${MOVIE_ID}) e chame 2× com env diferente
+#   3. Resultado: nenhum id de login e nenhum "movie-card-heart-…" escrito neste arquivo
+appId: com.puciec.cinefav
+tags:
+  - regressao
+---
+- launchApp
+- tapOn:
+    id: "login-email-input"
+- inputText: "aluno@puc.br"
+- tapOn:
+    id: "login-password-input"
+- inputText: "1234"
+- tapOn:
+    id: "login-submit-button"
+- assertVisible:
+    id: "movielist-screen"
+- tapOn:
+    id: "movie-card-heart-603"
+- tapOn:
+    id: "movie-card-heart-27205"
+- tapOn:
+    id: "movielist-favorites-button"
+- assertVisible:
+    id: "favorites-item-603"
+- assertVisible:
+    id: "favorites-item-27205"
+- assertVisible: "2 favoritos"

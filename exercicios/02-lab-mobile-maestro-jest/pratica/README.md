@@ -31,15 +31,15 @@ maestro hierarchy                    # lista os testIDs da tela (o app Maestro S
 
 ---
 
-## Os flows (sua entrega)
+## Os flows (entrega: **02 e 03** · 04 e 05 são opcionais)
 
 | Arquivo | O que testa | Status |
 |---|---|---|
 | `flows/01-launch.yaml` | login + lista de filmes | ✅ modelo resolvido |
-| `flows/02-search.yaml` | busca (usa `env:`) | 🧑‍💻 você completa |
-| `flows/03-favorite.yaml` | favoritar → Favoritos | 🧑‍💻 você completa |
-| `flows/04-detail.yaml` | detalhe + favoritar | 🧑‍💻 você completa |
-| `flows/05-js-dynamic.yaml` | busca via JS (`evalScript`) | 🧑‍💻 você completa |
+| `flows/02-search.yaml` | busca (usa `env:`) | ✅ entrega — você completa |
+| `flows/03-favorite.yaml` | favoritar → Favoritos | ✅ entrega — você completa |
+| `flows/04-detail.yaml` | detalhe + favoritar | ⭐ opcional (não vale nota) |
+| `flows/05-js-dynamic.yaml` | busca via JS (`evalScript`) | ⭐ opcional (não vale nota) |
 
 Cada flow tem comentários `# TODO` guiando. **Bônus:** extraia `flows/_fragments/login.yaml` e chame com `runFlow:`.
 
@@ -49,4 +49,4 @@ Os testIDs do app estão no `enunciado.md` (tabela completa) e em `src/utils/tes
 
 ## Entrega
 
-PR no seu fork: testes Jest completos + os 5 flows completos. O bot (J.A.R.V.I.S.) comenta a nota mínima a cada commit; a final sai no Canvas.
+PR no seu fork: testes Jest completos + os flows 02 e 03 completos (04 e 05 são opcionais). O bot (J.A.R.V.I.S.) comenta a nota mínima a cada commit; a final sai no Canvas.

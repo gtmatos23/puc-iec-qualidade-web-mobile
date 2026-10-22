@@ -1,0 +1,12 @@
+# 🔴 NÍVEL 4 (desafio): o login SEM um único id escrito no flow — tudo vem do Page Object.
+# Se o dev renomear um testID, você conserta em elements/*.js, não aqui.
+appId: com.puciec.cinefav
+tags:
+  - regressao
+---
+- launchApp
+- runScript: elements/login.js
+- runScript: elements/movielist.js
+# TODO: tapOn com id: ${output.login.email}, inputText "aluno@puc.br"
+# TODO: o mesmo para senha ("1234") e para o botão entrar
+# TODO: assertVisible com id: ${output.lista.tela}

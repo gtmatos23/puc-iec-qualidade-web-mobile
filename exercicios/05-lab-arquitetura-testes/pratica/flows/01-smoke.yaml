@@ -1,0 +1,8 @@
+# 📘 MODELO — flow curto que só COMPÕE fragmentos. Leia antes de fazer o 02.
+appId: com.puciec.cinefav
+tags:
+  - smoke
+---
+- launchApp
+- runFlow: _fragments/login.yaml
+- assertVisible: "Matrix"

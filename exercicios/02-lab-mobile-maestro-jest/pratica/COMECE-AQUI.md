@@ -46,12 +46,32 @@ npm run android      # compila e instala o CineFav no emulador Android
 
 ## 4. Maestro
 
+**macOS / Linux:**
+
 ```bash
-curl -Ls get.maestro.mobile.dev | bash    # Windows e outros: https://docs.maestro.dev/getting-started/installing-maestro
-maestro test flows/01-launch.yaml          # modelo resolvido
+curl -Ls get.maestro.mobile.dev | bash
+source ~/.zshrc                            # (ou ~/.bashrc) — ou abra um terminal novo
 ```
 
-Depois complete `flows/02-search.yaml` → `05-js-dynamic.yaml` (TODOs marcados).
+**Windows** (terminal nativo, não WSL): baixe o `maestro.zip` em <https://github.com/mobile-dev-inc/Maestro/releases/latest>, extraia em `C:\maestro` e acrescente **`C:\maestro\bin`** ao **Path**. O Maestro precisa de Java: defina **`JAVA_HOME`** = `C:\Program Files\Android\Android Studio\jbr` (o Java do Android Studio). Feche e reabra o terminal.
+
+> **Java 17+ é obrigatório:** `java -version`. Java mais velho (comum em Linux) → instale o JDK 17 e aponte o `JAVA_HOME`.
+> **Pré-requisito do passo 3:** `adb` precisa funcionar em qualquer pasta. Se `adb` "não existe", acrescente `<Android SDK Location>/platform-tools` ao Path. Copie o caminho em Android Studio → *Settings → Android SDK* (quem instalou em outra pasta tem outro caminho). Depois de editar o Path, **abra um terminal novo** (macOS/Linux: `source ~/.zshrc` ou `~/.bashrc`).
+
+Confira e rode o modelo (**com o emulador ligado**):
+
+```bash
+maestro --version
+maestro test flows/01-launch.yaml          # modelo resolvido (Windows: flows\01-launch.yaml)
+```
+
+> `maestro` não achou o device? O emulador precisa estar **ligado e com o Android carregado**; `adb devices` tem que listá-lo.
+> Apareceu um aviso cinza de compatibilidade no emulador? Toque em **OK** e rode o flow de novo.
+
+Depois complete `flows/02-search.yaml` e `flows/03-favorite.yaml` (TODOs marcados): **são os dois flows da entrega**. `04-detail.yaml` e `05-js-dynamic.yaml` são **opcionais** (prática extra, não valem nota).
+
+> **YAML indenta com espaços, nunca com Tab** (o `.editorconfig` já converte para 2 espaços). `tapOn:` seguido de `id:` → o `id:` fica 2 espaços à direita.
+> **Repetiu o login em vários flows?** Extraia para um arquivo e chame com `- runFlow: file: _fragments/login.yaml` (veja o slide *Fragmento* da aula).
 
 **Maestro Studio (recomendado) — app desktop:** ele mostra o `id` de cada elemento clicando na tela do emulador. Desde 2026 não vem mais com o `maestro`: baixe em **studio.maestro.dev** (macOS `.dmg` ~700 MB · Windows `.exe` ~560 MB · Linux `.AppImage` ~630 MB). É um download grande, então baixe com antecedência. **Sem o Studio você não fica travado:** `maestro hierarchy` imprime os `id`s no terminal e todos estão em `src/utils/testIDs.ts`.
 
@@ -59,6 +79,10 @@ Depois complete `flows/02-search.yaml` → `05-js-dynamic.yaml` (TODOs marcados)
 
 O screencast da unidade mostra o professor fazendo o primeiro exercício de cada
 frente. Pause, rode, compare.
+
+## Não consegue instalar na sua máquina? (PC corporativo sem permissão de administrador)
+
+Faça o setup e a execução do emulador **em dupla**, no computador de um colega (compartilhando a tela). Avise o professor — a entrega no PR continua **individual**.
 
 ## Travou?
 

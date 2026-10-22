@@ -12,9 +12,9 @@ Repositório público com os **exercícios, apps de prática e slides** da disci
 | [Lab Playwright Web](./exercicios/01-lab-playwright-web/) | busca + network mocking (4 testes) | 10 |
 | [Lab Playwright PWA](./exercicios/04-lab-playwright-pwa/) | 20 desafios + missão livre | 10 |
 | [Lab Mobile — Maestro + Jest](./exercicios/02-lab-mobile-maestro-jest/) | Jest, RNTL, Maestro | 10 |
-| [Lab IA — Pipeline Test Generation](./exercicios/03-lab-ia-test-gen/) | testes gerados por IA | 10 |
+| [Lab Arquitetura de Testes](./exercicios/05-lab-arquitetura-testes/) | fragmentos, `env` e Page Object em Maestro | 10 |
 | Atividade 1 — Registro de bugs | formulário no Canvas | 10 |
-| [Projeto Final](./exercicios/projeto-final/) | suíte completa | 50 |
+| [Seminário Técnico — Projeto Final](./exercicios/projeto-final/) | trabalho em grupo: tema atual, demo ao vivo e relatório | 50 |
 
 Prazos e valores oficiais: **Canvas**.
 

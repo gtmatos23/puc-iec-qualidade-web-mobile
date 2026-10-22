@@ -1,3 +1,4 @@
+# ⭐ OPCIONAL — prática extra, NÃO vale nota (a entrega são os flows 02 e 03).
 # Flow 4 — Abrir o detalhe do filme, favoritar lá dentro e voltar pra lista.
 # Conceito: navegação entre telas + asserções em cada uma.
 appId: com.puciec.cinefav

@@ -1,0 +1,5 @@
+# ✅ AVALIATIVO — NÍVEL 1: fragmento "favoritar um filme". Recebe o id por env: ${MOVIE_ID}.
+# Pré-condição: estar na lista de filmes. (testID do coração: movie-card-heart-<id>)
+appId: com.puciec.cinefav
+---
+# TODO: - tapOn com id "movie-card-heart-${MOVIE_ID}"
