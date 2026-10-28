@@ -1,4 +1,3 @@
-# ✅ AVALIATIVO — NÍVEL 3: o MESMO fragmento chamado com dois termos diferentes (env no runFlow).
 appId: com.puciec.cinefav
 tags:
   - regressao
@@ -18,10 +17,3 @@ tags:
     file: _fragments/buscar.yaml
     env:
       TERM: "Avatar"
-# TODO: runFlow do fragmento buscar.yaml passando env: TERM: "Matrix"
-#   dica:
-#   - runFlow:
-#       file: _fragments/buscar.yaml
-#       env:
-#         TERM: "Matrix"
-# TODO: limpe a busca (tapOn id "search-clear-button") e chame o MESMO fragmento com TERM: "Avatar"
