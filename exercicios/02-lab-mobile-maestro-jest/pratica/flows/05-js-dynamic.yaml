@@ -1,3 +1,4 @@
+# ⭐ OPCIONAL — prática extra, NÃO vale nota (a entrega são os flows 02 e 03).
 # Flow 5 — JavaScript embutido (evalScript).
 # Conceito: evalScript roda JS inline; o que grava em `output` é lido via ${output.campo}.
 # (runScript: é pra ARQUIVO .js — pra JS inline use evalScript.)

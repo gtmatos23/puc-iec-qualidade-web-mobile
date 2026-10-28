@@ -1,0 +1,10 @@
+# 📘 MODELO — flow curto que só COMPÕE fragmentos. Leia antes de fazer o 02.
+appId: com.puciec.cinefav
+tags:
+  - busca
+---
+- launchApp
+- runFlow: _fragments/login.yaml
+- runFlow: _fragments/abrir-busca.yaml
+- assertVisible:
+    id: "search-input" # ou o elemento que valida que a tela de busca abriu

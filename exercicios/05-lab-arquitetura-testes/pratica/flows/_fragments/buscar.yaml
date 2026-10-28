@@ -1,0 +1,10 @@
+# ✅ AVALIATIVO — NÍVEL 3: fragmento PARAMETRIZADO. Recebe o termo por env (${TERM}).
+# Pré-condição: já estar na tela de busca (use abrir-busca antes).
+appId: com.puciec.cinefav
+---
+- tapOn:
+    id: "search-input"
+
+- inputText: ${TERM}
+
+- assertVisible: ${TERM}

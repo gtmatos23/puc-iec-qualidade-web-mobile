@@ -1,0 +1,11 @@
+# ✅ AVALIATIVO — NÍVEL 2 (fácil): fragmento "chegar na tela de busca".
+# Complete: ele reaproveita o fragmento de login e abre a busca.
+appId: com.puciec.cinefav
+---
+- runFlow: login.yaml
+
+- tapOn:
+    id: "movielist-search-button"
+
+- assertVisible:
+    id: "search-screen"

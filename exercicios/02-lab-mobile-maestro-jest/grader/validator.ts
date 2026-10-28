@@ -72,9 +72,9 @@ const criteria: Criterion[] = []
   })
 }
 
-// 3. Flows Maestro completos (3) — 5 flows sem TODOs, com asserções
+// 3. Flows Maestro da entrega (02 e 03) — sem TODOs, com asserções; 04 e 05 são opcionais (sem nota)
 {
-  const REQUIRED = ['01-launch.yaml', '02-search.yaml', '03-favorite.yaml', '04-detail.yaml', '05-js-dynamic.yaml']
+  const REQUIRED = ['02-search.yaml', '03-favorite.yaml']
   let complete = 0
   const notes: string[] = []
   for (const f of REQUIRED) {
@@ -85,10 +85,10 @@ const criteria: Criterion[] = []
     if (ok) complete++
     else notes.push(`${f}: ${todos > 0 ? `${todos} TODO(s)` : 'sem assertVisible'}`)
   }
-  const earned = complete >= 5 ? 2 : complete >= 3 ? 1.5 : complete >= 1 ? 0.5 : 0
+  const earned = complete // 1 pt por flow (02 e 03)
   criteria.push({
     key: 'flows',
-    label: `5 flows Maestro completos (${complete}/5)`,
+    label: `Flows Maestro 02 e 03 completos (${complete}/2)`,
     weight: 2,
     earned,
     note: notes.length ? notes.join(' · ') : undefined,

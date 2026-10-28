@@ -1,0 +1,29 @@
+# 🔵 DEMO (não conta nota): "getByRole" no Maestro.
+# id/text são REGEX → dá pra pegar "todos os botões de um tipo" sem listar um por um.
+# `index` faz o papel do .nth() do Playwright. Seletores vêm de elements/roles.js.
+appId: com.puciec.cinefav
+tags:
+  - demo
+---
+- launchApp
+- runFlow: _fragments/login.yaml
+- runScript: elements/roles.js
+
+# ~ getAllByRole('button', { name: /heart/ }).first()
+- tapOn:
+    id: ${output.role.botaoCoracao}
+    index: 0
+
+# ~ .nth(2)
+- tapOn:
+    id: ${output.role.botaoCoracao}
+    index: 2
+
+# ~ getByRole('button', { name: 'Favoritos' })
+- tapOn:
+    id: ${output.role.botaoFavoritos}
+
+# ~ expect(getAllByRole('listitem')).toHaveCount(2)
+- assertVisible: "2 favoritos"
+- assertVisible:
+    id: ${output.role.itemFavorito}

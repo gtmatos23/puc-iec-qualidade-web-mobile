@@ -1,0 +1,13 @@
+# 📘 MODELO — fragmento: um pedaço reutilizável de flow. Chamado via runFlow.
+appId: com.puciec.cinefav
+---
+- tapOn:
+    id: "login-email-input"
+- inputText: "aluno@puc.br"
+- tapOn:
+    id: "login-password-input"
+- inputText: "1234"
+- tapOn:
+    id: "login-submit-button"
+- assertVisible:
+    id: "movielist-screen"

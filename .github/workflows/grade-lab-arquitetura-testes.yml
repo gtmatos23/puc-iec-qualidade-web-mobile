@@ -1,10 +1,10 @@
-name: Grade — Lab IA
+name: Grade — Lab Arquitetura de Testes
 
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
     paths:
-      - 'exercicios/03-lab-ia-test-gen/**'
+      - 'exercicios/05-lab-arquitetura-testes/**'
 
 permissions:
   pull-requests: write
@@ -36,20 +36,20 @@ jobs:
 
       - name: Install grader deps
         run: npm install
-        working-directory: exercicios/03-lab-ia-test-gen/grader
+        working-directory: exercicios/05-lab-arquitetura-testes/grader
 
       - name: Run validator
         id: grade
         run: |
-          npx ts-node validator.ts --entrega ../../../_pr/exercicios/03-lab-ia-test-gen
-        working-directory: exercicios/03-lab-ia-test-gen/grader
+          npx ts-node validator.ts --entrega ../../../_pr/exercicios/05-lab-arquitetura-testes
+        working-directory: exercicios/05-lab-arquitetura-testes/grader
 
       - name: Upload grade artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: grade-pr${{ github.event.pull_request.number }}
-          path: exercicios/03-lab-ia-test-gen/grader/grade.json
+          path: exercicios/05-lab-arquitetura-testes/grader/grade.json
           retention-days: 90
 
       - name: Comment on PR
@@ -58,7 +58,7 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const gradePath = 'exercicios/03-lab-ia-test-gen/grader/grade.json'
+            const gradePath = 'exercicios/05-lab-arquitetura-testes/grader/grade.json'
 
             let grade
             try {
@@ -68,7 +68,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: '❌ **J.A.R.V.I.S.** — Erro ao ler resultado da avaliação. Verifique os logs do workflow.'
+                body: '❌ **J.A.R.V.I.S.** — Não consegui avaliar sua entrega. **Isso pode ser falha do avaliador, não sua** — sua entrega não foi julgada. Avise o professor (ou faça um novo push em alguns minutos para tentar de novo).'
               })
               return
             }
@@ -76,7 +76,7 @@ jobs:
             const { autoScore, maxAutoScore, breakdown } = grade
 
             const body = [
-              '## 🤖 J.A.R.V.I.S. — Avaliação Lab IA',
+              '## 🤖 J.A.R.V.I.S. — Avaliação Lab Arquitetura de Testes',
               '',
               `**Nota automática (piso): ${autoScore}/${maxAutoScore} pts**`,
               '',
@@ -97,7 +97,7 @@ jobs:
 
             const existing = comments.find(c =>
               c.user.login === 'github-actions[bot]' &&
-              c.body.includes('Lab IA')
+              c.body.includes('Lab Arquitetura de Testes')
             )
 
             if (existing) {
