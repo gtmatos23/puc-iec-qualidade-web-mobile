@@ -9,7 +9,22 @@ tags:
 - launchApp
 - runFlow: _fragments/login.yaml
 - runScript: elements/movielist.js
-# TODO: favorite o Matrix (tapOn no coração via ${output.lista.coracaoMatrix})
-# TODO: abra Favoritos (${output.lista.botaoFavoritos}) e assertVisible "1 favorito"
-# TODO: remova o Matrix (tapOn no id "favorites-item-603-remove")
-# TODO: assertNotVisible do item "favorites-item-603" e assertVisible do id "favorites-empty"
+
+# 1. Favorita o Matrix via Page Object
+- tapOn:
+    id: ${output.lista.coracaoMatrix}
+
+# 2. Abre a tela de Favoritos via Page Object e valida a contagem
+- tapOn:
+    id: ${output.lista.botaoFavoritos}
+- assertVisible: "1 favorito"
+
+# 3. Remove o Matrix da lista de favoritos
+- tapOn:
+    id: "favorites-item-603-remove"
+
+# 4. Valida que o item não está mais visível e que a tela vazia é exibida
+- assertNotVisible:
+    id: "favorites-item-603"
+- assertVisible:
+    id: "favorites-empty"

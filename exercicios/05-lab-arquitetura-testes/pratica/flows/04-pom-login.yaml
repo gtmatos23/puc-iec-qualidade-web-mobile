@@ -7,6 +7,17 @@ tags:
 - launchApp
 - runScript: elements/login.js
 - runScript: elements/movielist.js
-# TODO: tapOn com id: ${output.login.email}, inputText "aluno@puc.br"
-# TODO: o mesmo para senha ("1234") e para o botão entrar
-# TODO: assertVisible com id: ${output.lista.tela}
+
+- tapOn:
+    id: ${output.login.email}
+- inputText: "aluno@puc.br"
+
+- tapOn:
+    id: ${output.login.senha}
+- inputText: "1234"
+
+- tapOn:
+    id: ${output.login.entrar}
+
+- assertVisible:
+    id: ${output.lista.tela}

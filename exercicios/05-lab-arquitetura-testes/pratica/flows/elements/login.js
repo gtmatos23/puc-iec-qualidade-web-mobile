@@ -3,6 +3,6 @@
 // Complete com os testIDs (use `maestro hierarchy` na tela de Login — ou veja o fluxo 01-smoke/_fragments/login.yaml).
 output.login = {
   email: "login-email-input",
-  senha: "",      // TODO
-  entrar: "",     // TODO
+  senha: "login-password-input",
+  entrar: "login-submit-button",
 };
